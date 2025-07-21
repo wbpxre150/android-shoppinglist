@@ -1,26 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="?attr/colorSurface">
 
-    <EditText
-        android:id="@+id/edit_list_name"
-        android:layout_width="match_parent"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_list_name"
-        android:inputType="textAutoCorrect"
-        android:minHeight="48dp"
-        android:importantForAutofill="no">
-        <requestFocus />
-    </EditText>
+        android:background="?attr/colorSurface"
+        android:elevation="0dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="match_parent"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardCreateList"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/save" />
+        android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+        android:layout_marginVertical="@dimen/spacing_xl"
+        android:backgroundTint="?attr/colorSurfaceContainer"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_elevation"
+        app:strokeColor="?attr/colorOutlineVariant"
+        app:strokeWidth="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.3">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_xxl">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_shopping_cart_24"
+                android:background="@drawable/gradient_primary"
+                android:backgroundTint="?attr/colorPrimaryContainer"
+                android:padding="20dp"
+                android:scaleType="centerInside"
+                app:tint="?attr/colorOnPrimaryContainer"
+                android:layout_marginBottom="@dimen/spacing_xl" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="New Shopping List"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textColor="?attr/colorOnSurface"
+                android:layout_marginBottom="@dimen/spacing_s" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Give your list a memorable name"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/spacing_xl" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutListName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_list_name"
+                app:boxCornerRadiusTopStart="@dimen/button_corner_radius"
+                app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"
+                app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
+                app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
+                app:boxStrokeColor="?attr/colorOutline"
+                app:hintTextColor="?attr/colorOnSurfaceVariant"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_marginBottom="@dimen/spacing_xl">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_list_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapWords"
+                    android:maxLines="1">
+                    <requestFocus />
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_save"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_min_height"
+                android:text="@string/save"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                app:cornerRadius="@dimen/button_corner_radius"
+                app:icon="@drawable/ic_check_circle_24"
+                app:iconGravity="textStart"
+                app:backgroundTint="?attr/colorPrimary"
+                app:iconTint="?attr/colorOnPrimary"
+                android:textColor="?attr/colorOnPrimary" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

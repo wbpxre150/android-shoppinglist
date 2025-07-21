@@ -151,8 +151,8 @@ class ShoppingListDetailActivity : AppCompatActivity() {
 
         // Add item button handler
         binding.buttonAddItem.setOnClickListener {
-            val itemName = binding.editTextItemName.text.toString().trim()
-            val quantityStr = binding.editTextItemQuantity.text.toString().trim()
+            val itemName = binding.editTextItemName.text?.toString()?.trim() ?: ""
+            val quantityStr = binding.editTextItemQuantity.text?.toString()?.trim() ?: ""
             val quantity = if (quantityStr.isEmpty()) 1 else quantityStr.toInt()
 
             if (TextUtils.isEmpty(itemName)) {
@@ -170,8 +170,8 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 shoppingViewModel.insertItem(newItem)
                 
                 // Clear input fields
-                binding.editTextItemName.text.clear()
-                binding.editTextItemQuantity.text.clear()
+                binding.editTextItemName.text?.clear()
+                binding.editTextItemQuantity.text?.clear()
                 binding.editTextItemName.requestFocus()
             }
         }

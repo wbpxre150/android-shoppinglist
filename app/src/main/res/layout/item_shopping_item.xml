@@ -1,64 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView 
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="2dp">
+    android:layout_marginHorizontal="@dimen/item_horizontal_margin"
+    android:layout_marginVertical="@dimen/item_margin_compact"
+    android:backgroundTint="?attr/colorSurfaceContainer"
+    app:cardCornerRadius="@dimen/card_corner_radius_small"
+    app:cardElevation="2dp"
+    app:strokeColor="?attr/colorOutlineVariant"
+    app:strokeWidth="1dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="@dimen/item_padding_compact">
 
         <CheckBox
             android:id="@+id/checkBoxPurchased"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="@dimen/touch_target_compact"
+            android:minHeight="@dimen/touch_target_compact"
+            android:padding="@dimen/checkbox_padding"
+            android:buttonTint="?attr/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textViewItemName"
+        <LinearLayout
+            android:id="@+id/layoutItemInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/textViewItemQuantity"
-            app:layout_constraintEnd_toStartOf="@+id/imageButtonDelete"
-            app:layout_constraintStart_toEndOf="@+id/checkBoxPurchased"
+            android:layout_marginStart="@dimen/spacing_m"
+            android:layout_marginEnd="@dimen/spacing_compact"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/checkBoxPurchased"
+            app:layout_constraintEnd_toStartOf="@id/layoutItemActions"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Milk" />
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:id="@+id/textViewItemQuantity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButtonDelete"
-            app:layout_constraintStart_toEndOf="@+id/checkBoxPurchased"
-            app:layout_constraintTop_toBottomOf="@+id/textViewItemName"
-            tools:text="Quantity: 2" />
+            <TextView
+                android:id="@+id/textViewItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                android:textColor="?attr/colorOnSurface"
+                android:maxLines="2"
+                android:ellipsize="end"
+                tools:text="Organic Whole Milk" />
 
-        <ImageButton
-            android:id="@+id/imageButtonDelete"
+            <TextView
+                android:id="@+id/textViewItemQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_margin_compact"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:visibility="gone"
+                tools:text="Qty: 2"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutItemActions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/delete"
-            android:padding="8dp"
-            android:src="@android:drawable/ic_menu_delete"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/textViewQuantityBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="32dp"
+                android:paddingHorizontal="@dimen/spacing_s"
+                android:paddingVertical="@dimen/spacing_xs"
+                android:background="@drawable/gradient_primary"
+                android:backgroundTint="?attr/colorPrimaryContainer"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:gravity="center"
+                android:layout_marginEnd="@dimen/spacing_compact"
+                android:visibility="gone"
+                tools:text="2"
+                tools:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/imageButtonDelete"
+                android:layout_width="@dimen/touch_target_compact"
+                android:layout_height="@dimen/touch_target_compact"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/delete"
+                android:padding="@dimen/checkbox_padding"
+                android:src="@drawable/ic_delete_24"
+                app:tint="?attr/colorOnSurfaceVariant" />
+
+        </LinearLayout>
+
+        <!-- Purchased state overlay -->
+        <View
+            android:id="@+id/viewPurchasedOverlay"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="?attr/colorSecondary"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/checkBoxPurchased"
+            app:layout_constraintEnd_toStartOf="@id/layoutItemActions"
+            app:layout_constraintTop_toTopOf="@id/layoutItemInfo"
+            app:layout_constraintBottom_toBottomOf="@id/layoutItemInfo"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
