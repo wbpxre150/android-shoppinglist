@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shopping List</string>
+    <string name="save">Save</string>
+    <string name="hint_list_name">Shopping List Name</string>
+    <string name="empty_not_saved">List name cannot be empty</string>
+    <string name="add_new_list">Add New List</string>
+    <string name="add_item">Add Item</string>
+    <string name="hint_item_name">Item Name</string>
+    <string name="hint_item_quantity">Quantity</string>
+    <string name="empty_item_not_saved">Item name cannot be empty</string>
+    <string name="delete">Delete</string>
+    <string name="delete_list">Delete List</string>
+    <string name="mark_purchased">Mark as Purchased</string>
+    <string name="mark_not_purchased">Mark as Not Purchased</string>
+    <string name="no_lists">No shopping lists found. Create one!</string>
+    <string name="no_items">No items in this list. Add some!</string>
+    <string name="edit_item">Edit Item</string>
+    <string name="hint_edit_item_name">Item name</string>
+    <string name="hint_edit_item_quantity">Quantity</string>
+    <string name="item_updated">Item updated</string>
+    <string name="item_name_empty">Item name cannot be empty</string>
+</resources>

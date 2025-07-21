@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "com.example.shoppinglist.app-mergeDebugResources-38:/layout/activity_shopping_list_detail.xml",
+        "source": "com.example.shoppinglist.app-main-41:/layout/activity_shopping_list_detail.xml"
+    },
+    {
+        "merged": "com.example.shoppinglist.app-mergeDebugResources-38:/layout/activity_main.xml",
+        "source": "com.example.shoppinglist.app-main-41:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.example.shoppinglist.app-mergeDebugResources-38:/layout/item_shopping_item.xml",
+        "source": "com.example.shoppinglist.app-main-41:/layout/item_shopping_item.xml"
+    },
+    {
+        "merged": "com.example.shoppinglist.app-mergeDebugResources-38:/layout/activity_new_shopping_list.xml",
+        "source": "com.example.shoppinglist.app-main-41:/layout/activity_new_shopping_list.xml"
+    },
+    {
+        "merged": "com.example.shoppinglist.app-mergeDebugResources-38:/layout/item_shopping_list.xml",
+        "source": "com.example.shoppinglist.app-main-41:/layout/item_shopping_list.xml"
+    },
+    {
+        "merged": "com.example.shoppinglist.app-mergeDebugResources-38:/layout/dialog_edit_item.xml",
+        "source": "com.example.shoppinglist.app-main-41:/layout/dialog_edit_item.xml"
+    }
+]

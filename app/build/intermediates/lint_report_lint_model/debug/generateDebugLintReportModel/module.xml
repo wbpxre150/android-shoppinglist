@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="/data/data/com.termux/files/home/shoppinglist/app"
+    name=":app"
+    type="APP"
+    maven="ShoppingList:app:"
+    agpVersion="8.2.0"
+    buildFolder="build"
+    bootClassPath="/data/data/com.termux/files/home/android-sdk/platforms/android-34/android.jar:/data/data/com.termux/files/home/android-sdk/build-tools/34.0.0/core-lambda-stubs.jar"
+    javaSourceLevel="1.8"
+    compileTarget="android-34"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="debug"/>
+</lint-module>

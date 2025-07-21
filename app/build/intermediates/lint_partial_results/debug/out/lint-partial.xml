@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.2.0" type="partial_results">
+    <map id="UnsafeIntentLaunch">
+            <map id="unprotected">
+                <entry
+                    name="com.example.shoppinglist.MainActivity"
+                    boolean="true"/>
+            </map>
+    </map>
+    <map id="UnusedResources">
+        <location id="R.string.mark_purchased"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/strings.xml"
+            line="14"
+            column="13"
+            startOffset="662"
+            endLine="14"
+            endColumn="34"
+            endOffset="683"/>
+        <location id="R.color.green"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/colors.xml"
+            line="11"
+            column="12"
+            startOffset="424"
+            endLine="11"
+            endColumn="24"
+            endOffset="436"/>
+        <location id="R.color.purple_200"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/colors.xml"
+            line="3"
+            column="12"
+            startOffset="62"
+            endLine="3"
+            endColumn="29"
+            endOffset="79"/>
+        <location id="R.string.mark_not_purchased"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/strings.xml"
+            line="15"
+            column="13"
+            startOffset="723"
+            endLine="15"
+            endColumn="38"
+            endOffset="748"/>
+        <entry
+            name="model"
+            string="attr[selectableItemBackgroundBorderless(R),colorPrimaryVariant(R)],color[purple_200(D),green(D),light_gray(D),black(U),teal_200(U),gray(D),white(U),teal_700(U),purple_700(U),purple_500(U)],id[edit_list_name(D),fab(U),editTextItemName(U),textViewItemQuantity(U),textViewItemCount(U),button_save(D),editTextQuantity(U),buttonAddItem(U),emptyView(U),editTextName(U),textViewListName(U),recyclerView(U),editTextItemQuantity(U),imageButtonDelete(U),recyclerViewItems(U),checkBoxPurchased(U),textViewItemName(U),fabDeleteList(U),linearLayoutAddItem(U)],layout[activity_new_shopping_list(U),activity_shopping_list_detail(U),dialog_edit_item(U),item_shopping_item(U),activity_main(U),item_shopping_list(U)],string[add_item(U),hint_list_name(U),hint_edit_item_name(U),no_lists(U),item_name_empty(U),save(U),edit_item(U),delete_list(U),no_items(U),delete(U),mark_purchased(D),empty_not_saved(U),app_name(U),hint_item_name(U),hint_edit_item_quantity(U),add_new_list(U),empty_item_not_saved(U),mark_not_purchased(D),hint_item_quantity(U),item_updated(U)],style[Theme_ShoppingList(U),Theme_MaterialComponents_DayNight_DarkActionBar(R)];1f^26^2a,20^1e^22^2d^32^37^25^2c,21^27^33,22^f^19^1b^1c^0^2e,23^24^28^34,39^3a^b^a^8^6^9^5^1;;;"/>
+        <location id="R.color.gray"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/colors.xml"
+            line="12"
+            column="12"
+            startOffset="466"
+            endLine="12"
+            endColumn="23"
+            endOffset="477"/>
+        <location id="R.color.light_gray"
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/values/colors.xml"
+            line="10"
+            column="12"
+            startOffset="377"
+            endLine="10"
+            endColumn="29"
+            endOffset="394"/>
+    </map>
+
+</incidents>
