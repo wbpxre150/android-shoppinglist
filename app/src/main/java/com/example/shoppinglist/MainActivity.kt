@@ -109,39 +109,17 @@ class MainActivity : AppCompatActivity() {
         val factory = ShoppingViewModel.ShoppingViewModelFactory((application as ShoppingApplication).repository)
         shoppingViewModel = ViewModelProvider(this, factory)[ShoppingViewModel::class.java]
 
-        // Create a composite list with item counts
-        shoppingViewModel.allShoppingLists.observe(this) { lists ->
-            val listWithCounts = mutableListOf<ShoppingListWithCount>()
-            
-            if (lists.isEmpty()) {
+        // Observe consolidated list data to prevent race conditions
+        shoppingViewModel.allShoppingListsWithCounts.observe(this) { listsWithCounts ->
+            if (listsWithCounts.isEmpty()) {
                 binding.emptyView.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
-                adapter.submitList(listWithCounts)
             } else {
                 binding.emptyView.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
-                
-                // We'll submit the list once we have all item counts
-                var listsProcessed = 0
-                
-                for (list in lists) {
-                    val listId = list.id
-                    var itemCount = 0
-                    var purchasedCount = 0
-                    
-                    shoppingViewModel.getItemCountForList(listId).observe(this) { count ->
-                        itemCount = count
-                        updateListWithCount(list, itemCount, purchasedCount, lists.size, listWithCounts)
-                        listsProcessed++
-                    }
-                    
-                    shoppingViewModel.getPurchasedItemCountForList(listId).observe(this) { count ->
-                        purchasedCount = count
-                        updateListWithCount(list, itemCount, purchasedCount, lists.size, listWithCounts)
-                        listsProcessed++
-                    }
-                }
             }
+            
+            adapter.submitList(listsWithCounts)
         }
 
         binding.fab.setOnClickListener {
@@ -165,29 +143,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
     
-    private fun updateListWithCount(
-        list: ShoppingList,
-        itemCount: Int,
-        purchasedCount: Int,
-        totalLists: Int,
-        listWithCounts: MutableList<ShoppingListWithCount>
-    ) {
-        // Look for existing entry
-        val existingIndex = listWithCounts.indexOfFirst { it.shoppingList.id == list.id }
-        
-        if (existingIndex >= 0) {
-            // Update existing entry
-            val existing = listWithCounts[existingIndex]
-            listWithCounts[existingIndex] = existing.copy(itemCount = itemCount, purchasedCount = purchasedCount)
-        } else {
-            // Add new entry
-            listWithCounts.add(ShoppingListWithCount(list, itemCount, purchasedCount))
-        }
-        
-        // Sort by position, then name for consistency
-        listWithCounts.sortWith(compareBy({ it.shoppingList.position }, { it.shoppingList.name }))
-        
-        // Submit the list when we have processed all lists
-        adapter.submitList(listWithCounts.toList())
-    }
 }

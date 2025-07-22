@@ -1,16 +1,21 @@
 package com.example.shoppinglist
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +29,15 @@ class ShoppingListDetailActivity : AppCompatActivity() {
     private lateinit var adapter: ShoppingItemAdapter
     private var listId: Int = -1
     private var listName: String = ""
+    private var isAddItemMinimized: Boolean = false
+    private lateinit var sharedPreferences: SharedPreferences
+    
+    companion object {
+        const val EXTRA_LIST_ID = "extra_list_id"
+        const val EXTRA_LIST_NAME = "extra_list_name"
+        private const val PREF_ADD_ITEM_MINIMIZED = "add_item_minimized"
+        private const val ANIMATION_DURATION = 300L
+    }
     
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
@@ -45,9 +59,18 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         listId = intent.getIntExtra(EXTRA_LIST_ID, -1)
         listName = intent.getStringExtra(EXTRA_LIST_NAME) ?: ""
         
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences("shopping_list_prefs", Context.MODE_PRIVATE)
+        
+        // Restore minimized state
+        isAddItemMinimized = sharedPreferences.getBoolean(PREF_ADD_ITEM_MINIMIZED, false)
+        
         // Set up action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = listName
+        
+        // Initialize add item UI state
+        updateAddItemVisibility(animate = false)
 
         // Set up RecyclerView
         adapter = ShoppingItemAdapter(
@@ -176,6 +199,16 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             }
         }
 
+        // Minimize button handler
+        binding.buttonMinimize.setOnClickListener {
+            minimizeAddItem()
+        }
+        
+        // Minimized card click handler
+        binding.cardAddItemMinimized.setOnClickListener {
+            expandAddItem()
+        }
+        
         // Delete list button handler
         binding.fabDeleteList.setOnClickListener {
             showDeleteConfirmationDialog()
@@ -248,21 +281,130 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             .setTitle("Delete Shopping List")
             .setMessage("Are you sure you want to delete this shopping list and all its items?")
             .setPositiveButton("Delete") { _, _ ->
-                // Get the full ShoppingList object before deleting
-                shoppingViewModel.getShoppingListById(listId).observe(this) { shoppingList ->
-                    // Only observe once
-                    if (shoppingList != null) {
-                        shoppingViewModel.delete(shoppingList)
-                        finish()
+                // Get the full ShoppingList object before deleting using one-time observation
+                val shoppingListLiveData = shoppingViewModel.getShoppingListById(listId)
+                val observer = object : androidx.lifecycle.Observer<ShoppingList?> {
+                    override fun onChanged(value: ShoppingList?) {
+                        if (value != null) {
+                            // Remove observer immediately to prevent memory leaks
+                            shoppingListLiveData.removeObserver(this)
+                            shoppingViewModel.delete(value)
+                            finish()
+                        }
                     }
                 }
+                shoppingListLiveData.observe(this, observer)
             }
             .setNegativeButton("Cancel", null)
             .show()
     }
 
-    companion object {
-        const val EXTRA_LIST_ID = "extra_list_id"
-        const val EXTRA_LIST_NAME = "extra_list_name"
+    private fun minimizeAddItem() {
+        if (isAddItemMinimized) return
+        
+        isAddItemMinimized = true
+        saveMinimizedState()
+        hideKeyboard()
+        clearInputFields()
+        updateAddItemVisibility(animate = true)
+    }
+    
+    private fun expandAddItem() {
+        if (!isAddItemMinimized) return
+        
+        isAddItemMinimized = false
+        saveMinimizedState()
+        updateAddItemVisibility(animate = true)
+        
+        // Focus and show keyboard after animation
+        binding.root.postDelayed({
+            binding.editTextItemName.requestFocus()
+            showKeyboard(binding.editTextItemName)
+        }, ANIMATION_DURATION / 2)
+    }
+    
+    private fun updateAddItemVisibility(animate: Boolean) {
+        if (animate) {
+            animateCardTransition()
+        } else {
+            binding.cardAddItem.visibility = if (isAddItemMinimized) View.GONE else View.VISIBLE
+            binding.cardAddItemMinimized.visibility = if (isAddItemMinimized) View.VISIBLE else View.GONE
+        }
+    }
+    
+    private fun animateCardTransition() {
+        val expandedCard = binding.cardAddItem
+        val minimizedCard = binding.cardAddItemMinimized
+        
+        if (isAddItemMinimized) {
+            // Animate from expanded to minimized
+            val fadeOutAnimator = ObjectAnimator.ofFloat(expandedCard, "alpha", 1f, 0f)
+            val fadeInAnimator = ObjectAnimator.ofFloat(minimizedCard, "alpha", 0f, 1f)
+            
+            fadeOutAnimator.duration = ANIMATION_DURATION / 2
+            fadeInAnimator.duration = ANIMATION_DURATION / 2
+            fadeInAnimator.startDelay = ANIMATION_DURATION / 2
+            
+            fadeOutAnimator.interpolator = AccelerateDecelerateInterpolator()
+            fadeInAnimator.interpolator = AccelerateDecelerateInterpolator()
+            
+            fadeOutAnimator.addUpdateListener { animator ->
+                if (animator.animatedFraction == 1f) {
+                    expandedCard.visibility = View.GONE
+                    minimizedCard.visibility = View.VISIBLE
+                    minimizedCard.alpha = 0f
+                }
+            }
+            
+            fadeOutAnimator.start()
+            fadeInAnimator.start()
+        } else {
+            // Animate from minimized to expanded
+            val fadeOutAnimator = ObjectAnimator.ofFloat(minimizedCard, "alpha", 1f, 0f)
+            val fadeInAnimator = ObjectAnimator.ofFloat(expandedCard, "alpha", 0f, 1f)
+            
+            fadeOutAnimator.duration = ANIMATION_DURATION / 2
+            fadeInAnimator.duration = ANIMATION_DURATION / 2
+            fadeInAnimator.startDelay = ANIMATION_DURATION / 2
+            
+            fadeOutAnimator.interpolator = AccelerateDecelerateInterpolator()
+            fadeInAnimator.interpolator = AccelerateDecelerateInterpolator()
+            
+            fadeOutAnimator.addUpdateListener { animator ->
+                if (animator.animatedFraction == 1f) {
+                    minimizedCard.visibility = View.GONE
+                    expandedCard.visibility = View.VISIBLE
+                    expandedCard.alpha = 0f
+                }
+            }
+            
+            fadeOutAnimator.start()
+            fadeInAnimator.start()
+        }
+    }
+    
+    private fun showKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+    }
+    
+    private fun hideKeyboard() {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentFocus = currentFocus
+        if (currentFocus != null) {
+            inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+            currentFocus.clearFocus()
+        }
+    }
+    
+    private fun clearInputFields() {
+        binding.editTextItemName.text?.clear()
+        binding.editTextItemQuantity.setText("1")
+    }
+    
+    private fun saveMinimizedState() {
+        sharedPreferences.edit()
+            .putBoolean(PREF_ADD_ITEM_MINIMIZED, isAddItemMinimized)
+            .apply()
     }
 }
