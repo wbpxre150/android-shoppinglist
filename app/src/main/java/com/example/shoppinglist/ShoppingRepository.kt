@@ -61,4 +61,39 @@ class ShoppingRepository(
     suspend fun updateShoppingLists(shoppingLists: List<ShoppingList>) {
         shoppingListDao.updateShoppingLists(shoppingLists)
     }
+    
+    fun getTotalPriceForList(listId: Int): LiveData<Double?> {
+        return shoppingItemDao.getTotalPriceForList(listId)
+    }
+    
+    // Notification-related methods
+    suspend fun getItemById(itemId: Int): ShoppingItem? {
+        return shoppingItemDao.getItemById(itemId)
+    }
+    
+    suspend fun getShoppingListByIdSync(listId: Int): ShoppingList? {
+        return shoppingListDao.getShoppingListByIdSync(listId)
+    }
+    
+    suspend fun getItemsWithFutureReminders(): List<Pair<ShoppingItem, ShoppingList>> {
+        val items = shoppingItemDao.getItemsWithFutureReminders()
+        return items.mapNotNull { item ->
+            getShoppingListByIdSync(item.listId)?.let { list ->
+                Pair(item, list)
+            }
+        }
+    }
+    
+    suspend fun getOverdueReminders(): List<Pair<ShoppingItem, ShoppingList>> {
+        val items = shoppingItemDao.getOverdueReminders()
+        return items.mapNotNull { item ->
+            getShoppingListByIdSync(item.listId)?.let { list ->
+                Pair(item, list)
+            }
+        }
+    }
+    
+    suspend fun updateItem(item: ShoppingItem) {
+        shoppingItemDao.update(item)
+    }
 }

@@ -1,8 +1,14 @@
 package com.example.shoppinglist
 
+import android.Manifest
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
@@ -11,22 +17,29 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.NumberPicker
 import android.widget.TextView
+import android.widget.TimePicker
 import android.widget.Toast
+import java.util.Calendar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.databinding.ActivityShoppingListDetailBinding
+import com.example.shoppinglist.notifications.ShoppingNotificationManager
 
 class ShoppingListDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityShoppingListDetailBinding
     private lateinit var shoppingViewModel: ShoppingViewModel
     private lateinit var adapter: ShoppingItemAdapter
+    private lateinit var notificationManager: ShoppingNotificationManager
     private var listId: Int = -1
     private var listName: String = ""
     private var isAddItemExpanded = true
@@ -36,6 +49,8 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         const val EXTRA_LIST_ID = "extra_list_id"
         const val EXTRA_LIST_NAME = "extra_list_name"
         const val KEY_ADD_ITEM_EXPANDED = "key_add_item_expanded"
+        private const val REQUEST_NOTIFICATION_PERMISSION = 1001
+        private const val REQUEST_EXACT_ALARM_PERMISSION = 1002
     }
     
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
@@ -87,9 +102,15 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         adapter = ShoppingItemAdapter(
             onItemCheckedChanged = { item, isChecked ->
                 val updatedItem = item.copy(isPurchased = isChecked)
+                // Cancel notification if item is marked as purchased
+                if (isChecked) {
+                    notificationManager.cancelNotification(item.id)
+                }
                 shoppingViewModel.updateItem(updatedItem)
             },
             onDeleteClicked = { item ->
+                // Cancel any pending notifications for this item
+                notificationManager.cancelNotification(item.id)
                 shoppingViewModel.deleteItem(item)
                 Toast.makeText(this, "Item deleted", Toast.LENGTH_SHORT).show()
             },
@@ -167,6 +188,9 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         // Get ViewModel
         val factory = ShoppingViewModel.ShoppingViewModelFactory((application as ShoppingApplication).repository)
         shoppingViewModel = ViewModelProvider(this, factory)[ShoppingViewModel::class.java]
+        
+        // Initialize notification manager
+        notificationManager = ShoppingNotificationManager.getInstance(this)
 
         // Observe items for this list
         shoppingViewModel.getItemsForList(listId).observe(this) { items ->
@@ -350,6 +374,7 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         val editTextName = dialogView.findViewById<EditText>(R.id.editTextName)
         val editTextQuantity = dialogView.findViewById<EditText>(R.id.editTextQuantity)
         val buttonCancel = dialogView.findViewById<Button>(R.id.buttonCancel)
+        val buttonReminder = dialogView.findViewById<Button>(R.id.buttonReminder)
         val buttonSave = dialogView.findViewById<Button>(R.id.buttonSave)
         
         // Set current values
@@ -364,6 +389,10 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         // Set up custom button listeners
         buttonCancel.setOnClickListener {
             dialog.dismiss()
+        }
+        
+        buttonReminder.setOnClickListener {
+            showSetReminderDialog(item, dialog, editTextName, editTextQuantity)
         }
         
         buttonSave.setOnClickListener {
@@ -448,6 +477,144 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         }, 100)
     }
 
+    private fun showSetReminderDialog(item: ShoppingItem, parentDialog: AlertDialog, editTextName: EditText, editTextQuantity: EditText) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_set_reminder, null)
+        val dayPicker = dialogView.findViewById<NumberPicker>(R.id.dayPicker)
+        val monthPicker = dialogView.findViewById<NumberPicker>(R.id.monthPicker)
+        val yearPicker = dialogView.findViewById<NumberPicker>(R.id.yearPicker)
+        val timePicker = dialogView.findViewById<TimePicker>(R.id.timePicker)
+        val buttonCancelReminder = dialogView.findViewById<Button>(R.id.buttonCancelReminder)
+        val buttonSetReminder = dialogView.findViewById<Button>(R.id.buttonSetReminder)
+        
+        // Set current date and time, or use existing reminder if available and not past
+        val calendar = Calendar.getInstance()
+        val currentTime = System.currentTimeMillis()
+        
+        if (item.reminderDateTime != null && item.reminderDateTime > currentTime) {
+            // Use existing reminder if it's in the future
+            calendar.timeInMillis = item.reminderDateTime
+        }
+        // Otherwise, calendar already has current date/time
+        
+        // Setup year picker with range from current year to current year + 10
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        yearPicker.minValue = currentYear
+        yearPicker.maxValue = currentYear + 10
+        yearPicker.value = calendar.get(Calendar.YEAR)
+        
+        // Setup month picker with abbreviated month names
+        val months = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+        monthPicker.minValue = 0
+        monthPicker.maxValue = 11
+        monthPicker.displayedValues = months
+        monthPicker.value = calendar.get(Calendar.MONTH)
+        
+        // Function to update day picker based on selected year and month
+        val updateDayPicker = {
+            val selectedYear = yearPicker.value
+            val selectedMonth = monthPicker.value
+            val daysInMonth = Calendar.getInstance().apply {
+                set(Calendar.YEAR, selectedYear)
+                set(Calendar.MONTH, selectedMonth)
+            }.getActualMaximum(Calendar.DAY_OF_MONTH)
+            
+            val currentDay = dayPicker.value
+            dayPicker.minValue = 1
+            dayPicker.maxValue = daysInMonth
+            
+            // Adjust day if it's no longer valid for the new month
+            if (currentDay > daysInMonth) {
+                dayPicker.value = daysInMonth
+            }
+        }
+        
+        // Setup day picker for initial month/year
+        updateDayPicker()
+        dayPicker.value = calendar.get(Calendar.DAY_OF_MONTH)
+        
+        // Update day picker when year or month changes
+        yearPicker.setOnValueChangedListener { _, _, _ ->
+            updateDayPicker()
+        }
+        
+        monthPicker.setOnValueChangedListener { _, _, _ ->
+            updateDayPicker()
+        }
+        
+        timePicker.hour = calendar.get(Calendar.HOUR_OF_DAY)
+        timePicker.minute = calendar.get(Calendar.MINUTE)
+        
+        val reminderDialog = AlertDialog.Builder(this)
+            .setTitle(R.string.set_reminder_title)
+            .setView(dialogView)
+            .create()
+        
+        buttonCancelReminder.setOnClickListener {
+            reminderDialog.dismiss()
+        }
+        
+        buttonSetReminder.setOnClickListener {
+            // Get selected date and time
+            val selectedYear = yearPicker.value
+            val selectedMonth = monthPicker.value
+            val selectedDay = dayPicker.value
+            
+            val selectedCalendar = Calendar.getInstance()
+            selectedCalendar.set(
+                selectedYear,
+                selectedMonth,
+                selectedDay,
+                timePicker.hour,
+                timePicker.minute,
+                0
+            )
+            
+            val reminderDateTime = selectedCalendar.timeInMillis
+            val currentTime = System.currentTimeMillis()
+            
+            // Check if reminder is in the past
+            if (reminderDateTime <= currentTime) {
+                Toast.makeText(this, R.string.reminder_past_error, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            
+            // Get updated item data from parent dialog
+            val newName = editTextName.text.toString().trim()
+            val quantityStr = editTextQuantity.text.toString().trim()
+            val newQuantity = if (quantityStr.isEmpty()) 1 else quantityStr.toInt()
+            
+            if (newName.isNotEmpty()) {
+                // Create updated item with reminder
+                val updatedItem = item.copy(
+                    name = newName,
+                    quantity = newQuantity,
+                    reminderDateTime = reminderDateTime
+                )
+                
+                // Update in database
+                shoppingViewModel.updateItem(updatedItem)
+                
+                // Check permissions and schedule notification
+                if (checkAndRequestNotificationPermissions()) {
+                    val shoppingList = ShoppingList(id = listId, name = listName)
+                    notificationManager.scheduleNotification(updatedItem, shoppingList)
+                    Toast.makeText(this, R.string.reminder_set, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Reminder saved, but permissions needed for notifications", Toast.LENGTH_LONG).show()
+                }
+                
+                // Close both dialogs
+                reminderDialog.dismiss()
+                parentDialog.dismiss()
+            } else {
+                Toast.makeText(this, R.string.item_name_empty, Toast.LENGTH_SHORT).show()
+            }
+        }
+        
+        reminderDialog.show()
+    }
+
     private fun showDeleteConfirmationDialog() {
         AlertDialog.Builder(this)
             .setTitle("Delete Shopping List")
@@ -469,6 +636,87 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+    
+    private fun checkAndRequestNotificationPermissions(): Boolean {
+        // Check notification permission for Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) 
+                != PackageManager.PERMISSION_GRANTED) {
+                
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
+                    // Show explanation dialog
+                    showPermissionExplanationDialog()
+                } else {
+                    // Request permission directly
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                        REQUEST_NOTIFICATION_PERMISSION
+                    )
+                }
+                return false
+            }
+        }
+        
+        // Check exact alarm permission for Android 12+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!notificationManager.canScheduleExactAlarms()) {
+                showExactAlarmPermissionDialog()
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    private fun showPermissionExplanationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Notification Permission Required")
+            .setMessage("This app needs notification permission to remind you about your shopping items. Please grant the permission to enable reminders.")
+            .setPositiveButton("Grant Permission") { _, _ ->
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    REQUEST_NOTIFICATION_PERMISSION
+                )
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+    
+    private fun showExactAlarmPermissionDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Exact Alarm Permission Required")
+            .setMessage("This app needs permission to schedule exact alarms for precise reminders. Please enable this in Settings.")
+            .setPositiveButton("Open Settings") { _, _ ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                        data = Uri.parse("package:$packageName")
+                    }
+                    startActivity(intent)
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+    
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        
+        when (requestCode) {
+            REQUEST_NOTIFICATION_PERMISSION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Notification permission denied. Reminders may not work.", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
 }

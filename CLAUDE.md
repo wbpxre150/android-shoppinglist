@@ -34,15 +34,17 @@ This is an Android shopping list app built with MVVM + Repository pattern:
 ### Data Model
 - Two main entities: ShoppingList and ShoppingItem
 - ShoppingItem has foreign key relationship to ShoppingList with CASCADE delete
-- Items have quantity, purchase status (isPurchased), and position for ordering
+- Items have quantity, purchase status (isPurchased), position for ordering, price, and optional reminders
 - All database operations use suspend functions with coroutines
+- Database version 3 with migration support for adding reminderDateTime column
 
 ### UI Structure
-- MainActivity: Main list of shopping lists
+- MainActivity: Main list of shopping lists with drag-and-drop reordering
 - NewShoppingListActivity: Create new shopping lists
-- ShoppingListDetailActivity: View/edit items within a list
-- RecyclerView adapters for both lists and items
+- ShoppingListDetailActivity: View/edit items within a list with pricing features
+- RecyclerView adapters for both lists and items with ItemTouchHelper support
 - View binding enabled for all activities
+- Custom dialogs for price input, item editing, and reminder setting
 
 ### Dependencies
 - Room 2.6.0 for database persistence
@@ -57,4 +59,4 @@ This is an Android shopping list app built with MVVM + Repository pattern:
 - **LiveData Composition**: ShoppingViewModel uses MediatorLiveData to combine multiple data sources for shopping list counts
 - **Coroutine Scopes**: applicationScope in Application class, viewModelScope in ViewModel for lifecycle-aware operations
 - **Foreign Key Cascade**: ShoppingItem.kt:11-16 ensures items are automatically deleted when parent list is removed
-- **Observer Pattern**: Complex observer management in ShoppingViewModel.kt:102-147 for dynamic list updates
+- **Observer Pattern**: Complex observer management in ShoppingViewModel.kt:102-147 for dynamic list updates with cleanup handling

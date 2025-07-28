@@ -22,6 +22,9 @@ interface ShoppingListDao {
 
     @Query("SELECT * FROM shopping_lists WHERE id = :listId")
     fun getShoppingListById(listId: Int): LiveData<ShoppingList>
+    
+    @Query("SELECT * FROM shopping_lists WHERE id = :listId")
+    suspend fun getShoppingListByIdSync(listId: Int): ShoppingList?
 
     // For getting the count of items in each list
     @Query("SELECT COUNT(id) FROM shopping_items WHERE listId = :listId")
