@@ -33,6 +33,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/textViewQuantityDisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:layout_marginEnd="@dimen/spacing_s"
+            android:minWidth="32dp"
+            android:paddingHorizontal="@dimen/spacing_s"
+            android:paddingVertical="@dimen/spacing_xs"
+            android:background="@drawable/gradient_primary"
+            android:backgroundTint="?attr/colorPrimaryContainer"
+            android:textAppearance="?attr/textAppearanceLabelMedium"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            android:gravity="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/checkBoxPurchased"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2"
+            tools:visibility="visible" />
+
         <LinearLayout
             android:id="@+id/layoutItemInfo"
             android:layout_width="0dp"
@@ -40,7 +61,7 @@
             android:layout_marginStart="@dimen/spacing_m"
             android:layout_marginEnd="@dimen/spacing_compact"
             android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@id/checkBoxPurchased"
+            app:layout_constraintStart_toEndOf="@id/textViewQuantityDisplay"
             app:layout_constraintEnd_toStartOf="@id/layoutItemActions"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -73,6 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -93,6 +115,28 @@
                 android:visibility="gone"
                 tools:text="2"
                 tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/textViewPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:visibility="gone"
+                tools:text="$12.99"
+                tools:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/imageButtonPrice"
+                android:layout_width="@dimen/touch_target_compact"
+                android:layout_height="@dimen/touch_target_compact"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Set price"
+                android:padding="@dimen/checkbox_padding"
+                android:src="@drawable/ic_attach_money_24"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                app:tint="?attr/colorOnSurfaceVariant" />
 
             <ImageButton
                 android:id="@+id/imageButtonDelete"

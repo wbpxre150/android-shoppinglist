@@ -50,3 +50,11 @@ This is an Android shopping list app built with MVVM + Repository pattern:
 - Kotlin Coroutines for async operations
 - Material Design components for UI
 - Target SDK 34, minimum SDK 24
+
+### Key Architectural Patterns
+- **Dependency Injection**: Lazy initialization in ShoppingApplication.kt:11-16 provides repository instance
+- **Database Singleton**: ShoppingDatabase.getDatabase() uses double-checked locking pattern for thread safety
+- **LiveData Composition**: ShoppingViewModel uses MediatorLiveData to combine multiple data sources for shopping list counts
+- **Coroutine Scopes**: applicationScope in Application class, viewModelScope in ViewModel for lifecycle-aware operations
+- **Foreign Key Cascade**: ShoppingItem.kt:11-16 ensures items are automatically deleted when parent list is removed
+- **Observer Pattern**: Complex observer management in ShoppingViewModel.kt:102-147 for dynamic list updates

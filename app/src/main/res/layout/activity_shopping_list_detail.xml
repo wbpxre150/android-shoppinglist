@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSurface">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
-        android:elevation="0dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItems"
@@ -83,6 +73,7 @@
         android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
         android:layout_marginVertical="@dimen/spacing_l"
         android:backgroundTint="?attr/colorSurfaceContainerHigh"
+        android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/card_elevation"
         app:strokeColor="?attr/colorOutline"
@@ -97,50 +88,48 @@
             android:orientation="vertical"
             android:padding="@dimen/card_padding">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add New Item"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="?attr/colorOnSurface"
-                android:layout_marginBottom="@dimen/spacing_l" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutItemName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_item_name"
-                app:boxCornerRadiusTopStart="@dimen/button_corner_radius"
-                app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"
-                app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
-                app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
-                app:boxStrokeColor="?attr/colorOutline"
-                app:hintTextColor="?attr/colorOnSurfaceVariant"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextItemName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:importantForAutofill="no"
-                    android:inputType="textCapWords"
-                    android:maxLines="1" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
+            <!-- Header with title and minimize button -->
             <LinearLayout
+                android:id="@+id/layoutHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/spacing_l">
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/spacing_l">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutItemQuantity"
+                <TextView
+                    android:id="@+id/textViewAddItemTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginEnd="@dimen/spacing_l"
-                    android:hint="@string/hint_item_quantity"
+                    android:text="Add New Item"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorOnSurface" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonMinimize"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="Minimize add item"
+                    app:icon="@drawable/ic_expand_less_24"
+                    app:iconTint="?attr/colorOnSurfaceVariant"
+                    android:backgroundTint="@android:color/transparent" />
+
+            </LinearLayout>
+
+            <!-- Expanded form content -->
+            <LinearLayout
+                android:id="@+id/layoutFormContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutItemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_item_name"
                     app:boxCornerRadiusTopStart="@dimen/button_corner_radius"
                     app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"
                     app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
@@ -150,28 +139,61 @@
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editTextItemQuantity"
+                        android:id="@+id/editTextItemName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:importantForAutofill="no"
-                        android:inputType="number"
-                        android:text="1"
+                        android:inputType="textCapWords"
                         android:maxLines="1" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonAddItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/button_min_height"
-                    android:text="@string/add_item"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    app:cornerRadius="@dimen/button_corner_radius"
-                    app:icon="@drawable/ic_add_24"
-                    app:iconGravity="textStart"
-                    app:backgroundTint="?attr/colorPrimary"
-                    app:iconTint="?attr/colorOnPrimary"
-                    android:textColor="?attr/colorOnPrimary" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/spacing_l">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutItemQuantity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/spacing_l"
+                        android:hint="@string/hint_item_quantity"
+                        app:boxCornerRadiusTopStart="@dimen/button_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
+                        app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
+                        app:boxStrokeColor="?attr/colorOutline"
+                        app:hintTextColor="?attr/colorOnSurfaceVariant"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextItemQuantity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:importantForAutofill="no"
+                            android:inputType="number"
+                            android:text="1"
+                            android:maxLines="1" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonAddItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/button_min_height"
+                        android:text="@string/add_item"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"
+                        app:cornerRadius="@dimen/button_corner_radius"
+                        app:icon="@drawable/ic_add_24"
+                        app:iconGravity="textStart"
+                        app:backgroundTint="?attr/colorPrimary"
+                        app:iconTint="?attr/colorOnPrimary"
+                        android:textColor="?attr/colorOnPrimary" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

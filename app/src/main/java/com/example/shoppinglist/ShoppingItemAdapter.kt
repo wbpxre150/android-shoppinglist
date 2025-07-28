@@ -16,7 +16,8 @@ class ShoppingItemAdapter(
     private val onItemCheckedChanged: (ShoppingItem, Boolean) -> Unit,
     private val onDeleteClicked: (ShoppingItem) -> Unit,
     private val onItemClicked: (ShoppingItem) -> Unit,
-    private val onStartDrag: (RecyclerView.ViewHolder) -> Unit
+    private val onStartDrag: (RecyclerView.ViewHolder) -> Unit,
+    private val onPriceClicked: (ShoppingItem) -> Unit
 ) : ListAdapter<ShoppingItem, ShoppingItemAdapter.ShoppingItemViewHolder>(ShoppingItemsComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingItemViewHolder {
@@ -30,7 +31,8 @@ class ShoppingItemAdapter(
             onItemCheckedChanged = { isChecked -> onItemCheckedChanged(current, isChecked) },
             onDeleteClicked = { onDeleteClicked(current) },
             onItemClicked = { onItemClicked(current) },
-            onStartDrag = { onStartDrag(holder) }
+            onStartDrag = { onStartDrag(holder) },
+            onPriceClicked = { onPriceClicked(current) }
         )
     }
     
@@ -56,18 +58,30 @@ class ShoppingItemAdapter(
     class ShoppingItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val itemNameView: TextView = itemView.findViewById(R.id.textViewItemName)
         private val itemQuantityView: TextView = itemView.findViewById(R.id.textViewItemQuantity)
+        private val quantityDisplayView: TextView = itemView.findViewById(R.id.textViewQuantityDisplay)
         private val checkBoxPurchased: CheckBox = itemView.findViewById(R.id.checkBoxPurchased)
         private val buttonDelete: ImageButton = itemView.findViewById(R.id.imageButtonDelete)
+        private val buttonPrice: ImageButton = itemView.findViewById(R.id.imageButtonPrice)
+        private val textViewPrice: TextView = itemView.findViewById(R.id.textViewPrice)
 
         fun bind(
             shoppingItem: ShoppingItem,
             onItemCheckedChanged: (Boolean) -> Unit,
             onDeleteClicked: () -> Unit,
             onItemClicked: () -> Unit,
-            onStartDrag: () -> Unit
+            onStartDrag: () -> Unit,
+            onPriceClicked: () -> Unit
         ) {
             itemNameView.text = shoppingItem.name
             itemQuantityView.text = "Quantity: ${shoppingItem.quantity}"
+            
+            // Show quantity badge if quantity > 1
+            if (shoppingItem.quantity > 1) {
+                quantityDisplayView.text = shoppingItem.quantity.toString()
+                quantityDisplayView.visibility = View.VISIBLE
+            } else {
+                quantityDisplayView.visibility = View.GONE
+            }
             
             // Set the checked state without triggering the listener
             checkBoxPurchased.setOnCheckedChangeListener(null)
@@ -87,6 +101,18 @@ class ShoppingItemAdapter(
             
             buttonDelete.setOnClickListener {
                 onDeleteClicked()
+            }
+            
+            buttonPrice.setOnClickListener {
+                onPriceClicked()
+            }
+            
+            // Display price if set
+            if (shoppingItem.price > 0.0) {
+                textViewPrice.text = String.format("$%.2f", shoppingItem.price)
+                textViewPrice.visibility = View.VISIBLE
+            } else {
+                textViewPrice.visibility = View.GONE
             }
             
             // Set click listener for editing

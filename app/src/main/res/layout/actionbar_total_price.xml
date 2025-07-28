@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/textViewTotalPrice"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="4dp"
+    android:textAppearance="?attr/textAppearanceTitleMedium"
+    android:textColor="?attr/colorOnSurface"
+    android:text="$0.00"
+    android:gravity="end"
+    android:visibility="gone" />
