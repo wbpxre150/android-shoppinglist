@@ -14,6 +14,7 @@ import com.example.shoppinglist.MainActivity
 import com.example.shoppinglist.R
 import com.example.shoppinglist.ShoppingItem
 import com.example.shoppinglist.ShoppingList
+import com.example.shoppinglist.ShoppingListDetailActivity
 
 class ShoppingNotificationManager private constructor(private val context: Context) {
     
@@ -140,12 +141,12 @@ class ShoppingNotificationManager private constructor(private val context: Conte
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         
-        val viewListIntent = Intent(context, NotificationReceiver::class.java).apply {
-            action = ACTION_VIEW_LIST
-            putExtra(EXTRA_LIST_ID, item.listId)
-            putExtra(EXTRA_NOTIFICATION_ID, item.id)
+        val viewListIntent = Intent(context, ShoppingListDetailActivity::class.java).apply {
+            putExtra(ShoppingListDetailActivity.EXTRA_LIST_ID, item.listId)
+            putExtra(ShoppingListDetailActivity.EXTRA_LIST_NAME, shoppingList.name)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
-        val viewListPendingIntent = PendingIntent.getBroadcast(
+        val viewListPendingIntent = PendingIntent.getActivity(
             context, item.id * 1000 + 3, viewListIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.viewModelScope
 import com.example.shoppinglist.ShoppingApplication
-import com.example.shoppinglist.ShoppingListDetailActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -103,24 +102,7 @@ class NotificationReceiver : BroadcastReceiver() {
                 }
             }
             
-            ShoppingNotificationManager.ACTION_VIEW_LIST -> {
-                val listId = intent.getIntExtra(ShoppingNotificationManager.EXTRA_LIST_ID, -1)
-                val notificationId = intent.getIntExtra(ShoppingNotificationManager.EXTRA_NOTIFICATION_ID, -1)
-                
-                if (listId != -1) {
-                    // Open the shopping list detail activity
-                    val viewIntent = Intent(context, ShoppingListDetailActivity::class.java).apply {
-                        putExtra("SHOPPING_LIST_ID", listId)
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    }
-                    context.startActivity(viewIntent)
-                    
-                    // Dismiss the notification
-                    if (notificationId != -1) {
-                        notificationManager.cancelNotification(notificationId)
-                    }
-                }
-            }
+            
         }
     }
 }
