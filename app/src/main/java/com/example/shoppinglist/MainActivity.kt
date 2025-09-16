@@ -4,8 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -47,6 +51,9 @@ class MainActivity : AppCompatActivity() {
             },
             onStartDrag = { viewHolder ->
                 itemTouchHelper.startDrag(viewHolder)
+            },
+            onListDoubleTapped = { shoppingList ->
+                showEditListDialog(shoppingList)
             }
         )
 
@@ -141,6 +148,48 @@ class MainActivity : AppCompatActivity() {
         if (updatedLists.isNotEmpty()) {
             shoppingViewModel.updateShoppingLists(updatedLists)
         }
+    }
+    
+    private fun showEditListDialog(shoppingList: ShoppingList) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_edit_list, null)
+        val editTextListName = dialogView.findViewById<EditText>(R.id.editTextListName)
+        val buttonCancel = dialogView.findViewById<Button>(R.id.buttonCancel)
+        val buttonSave = dialogView.findViewById<Button>(R.id.buttonSave)
+        
+        // Set current value
+        editTextListName.setText(shoppingList.name)
+        
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+            
+        // Set up button listeners
+        buttonCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        
+        buttonSave.setOnClickListener {
+            val newName = editTextListName.text.toString().trim()
+            
+            if (newName.isNotEmpty()) {
+                // Create updated list
+                val updatedList = shoppingList.copy(name = newName)
+                
+                // Update in database
+                shoppingViewModel.update(updatedList)
+                Toast.makeText(this, "List renamed successfully", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            } else {
+                Toast.makeText(this, "List name cannot be empty", Toast.LENGTH_SHORT).show()
+            }
+        }
+            
+        dialog.show()
+        
+        // Show keyboard automatically for dialog
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        editTextListName.requestFocus()
+        editTextListName.selectAll()
     }
     
 }

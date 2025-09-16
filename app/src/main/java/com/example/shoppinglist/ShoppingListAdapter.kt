@@ -1,6 +1,8 @@
 package com.example.shoppinglist
 
+import android.view.GestureDetector
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -11,7 +13,8 @@ import java.util.Collections
 
 class ShoppingListAdapter(
     private val onListClicked: (ShoppingList) -> Unit,
-    private val onStartDrag: (RecyclerView.ViewHolder) -> Unit
+    private val onStartDrag: (RecyclerView.ViewHolder) -> Unit,
+    private val onListDoubleTapped: (ShoppingList) -> Unit
 ) : ListAdapter<ShoppingListWithCount, ShoppingListAdapter.ShoppingListViewHolder>(ShoppingListsComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingListViewHolder {
@@ -20,8 +23,7 @@ class ShoppingListAdapter(
 
     override fun onBindViewHolder(holder: ShoppingListViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current, onStartDrag)
-        holder.itemView.setOnClickListener { onListClicked(current.shoppingList) }
+        holder.bind(current, onStartDrag, onListClicked, onListDoubleTapped)
     }
     
     fun moveItem(fromPosition: Int, toPosition: Int) {
@@ -42,7 +44,12 @@ class ShoppingListAdapter(
         private val listNameView: TextView = itemView.findViewById(R.id.textViewListName)
         private val itemCountView: TextView = itemView.findViewById(R.id.textViewItemCount)
 
-        fun bind(shoppingListWithCount: ShoppingListWithCount, onStartDrag: (RecyclerView.ViewHolder) -> Unit) {
+        fun bind(
+            shoppingListWithCount: ShoppingListWithCount,
+            onStartDrag: (RecyclerView.ViewHolder) -> Unit,
+            onListClicked: (ShoppingList) -> Unit,
+            onListDoubleTapped: (ShoppingList) -> Unit
+        ) {
             listNameView.text = shoppingListWithCount.shoppingList.name
             val itemCountText = if (shoppingListWithCount.itemCount > 0) {
                 "${shoppingListWithCount.purchasedCount}/${shoppingListWithCount.itemCount} items"
@@ -50,6 +57,22 @@ class ShoppingListAdapter(
                 "Empty list"
             }
             itemCountView.text = itemCountText
+            
+            val gestureDetector = GestureDetector(itemView.context, object : GestureDetector.SimpleOnGestureListener() {
+                override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                    onListClicked(shoppingListWithCount.shoppingList)
+                    return true
+                }
+                
+                override fun onDoubleTap(e: MotionEvent): Boolean {
+                    onListDoubleTapped(shoppingListWithCount.shoppingList)
+                    return true
+                }
+            })
+            
+            itemView.setOnTouchListener { _, event ->
+                gestureDetector.onTouchEvent(event)
+            }
             
             itemView.setOnLongClickListener {
                 onStartDrag(this)
