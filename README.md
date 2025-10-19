@@ -11,6 +11,8 @@ A modern Android shopping list application built with Kotlin featuring MVVM arch
 - **Smart Quantity System**: Set specific quantities with visual quantity badges (displayed only when > 1)
 - **Pricing Support**: Add prices to items with real-time total calculation displayed in ActionBar
 - **Item Reminders**: Set date/time reminders for shopping items with comprehensive notification system
+- **List Import/Export**: Share lists as .shoppinglist files, import lists with duplicate name handling
+- **Quick Rename**: Double-tap any shopping list to rename it instantly
 - **Persistent Storage**: All data stored locally using Room database with migration support
 
 ### User Interface
@@ -87,6 +89,7 @@ app/src/main/java/com/example/shoppinglist/
 ├── MainActivity.kt                    # Main shopping lists activity
 ├── NewShoppingListActivity.kt         # Create new shopping list
 ├── ShoppingListDetailActivity.kt      # Shopping list item management
+├── ImportListActivity.kt              # Import .shoppinglist files
 ├── ShoppingApplication.kt             # Application class with DI
 ├── ShoppingDatabase.kt                # Room database with migrations
 ├── ShoppingItem.kt                    # Item entity with price and reminders
@@ -97,10 +100,15 @@ app/src/main/java/com/example/shoppinglist/
 ├── ShoppingListDao.kt                 # List data access
 ├── ShoppingRepository.kt              # Repository with notification support
 ├── ShoppingViewModel.kt               # MVVM ViewModel with MediatorLiveData
-└── notifications/
-    ├── NotificationManager.kt         # Centralized notification management
-    ├── NotificationReceiver.kt        # Alarm handling and notification actions
-    └── BootReceiver.kt               # Notification persistence across reboots
+├── notifications/
+│   ├── NotificationManager.kt         # Centralized notification management
+│   ├── NotificationReceiver.kt        # Alarm handling and notification actions
+│   └── BootReceiver.kt               # Notification persistence across reboots
+├── utils/
+│   ├── ListExportService.kt           # Export lists to .shoppinglist files
+│   └── ListImportService.kt           # Import lists from .shoppinglist files
+└── models/
+    └── ExportModels.kt                # Data models for import/export (JSON)
 ```
 
 ## Database Schema (Version 3)
@@ -157,6 +165,22 @@ This application has evolved through several major iterations:
 - Boot persistence ensuring notifications survive device restarts
 - Modern Android 13+ permission handling with user-friendly dialogs
 - AlarmManager integration with exact timing and fallback support
+
+### v3.1 - List Import/Export & Sharing (9b81065 - 1951f73)
+- Export shopping lists to .shoppinglist files (JSON format)
+- Share lists via email, messaging apps, or file sharing
+- Import lists from .shoppinglist files with duplicate name handling
+- FileProvider integration for secure file sharing
+- Double-tap to rename shopping lists functionality
+- Fixed notification "View List" button navigation
+
+### v3.2 - Import System Bug Fixes (dc6a68e)
+- Fixed critical infinite import loop when opening shared .shoppinglist files
+- Flattened coroutine structure to prevent nested async operations
+- Added import guard flag to prevent concurrent imports
+- Implemented singleTop launch mode for ImportListActivity
+- Added onNewIntent() handler for proper intent re-delivery management
+- Ensured activity lifecycle properly completes after import operations
 
 ## License
 
