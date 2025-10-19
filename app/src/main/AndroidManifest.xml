@@ -41,10 +41,57 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".ImportListActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.ShoppingList">
+            <!-- Intent filter for opening .shoppinglist files by MIME type (preferred) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:mimeType="application/x-shoppinglist" />
+            </intent-filter>
+            <!-- Intent filter for opening .shoppinglist files by extension (fallback) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.shoppinglist" />
+                <data android:pathPattern=".*\\..*\\.shoppinglist" />
+                <data android:pathPattern=".*\\..*\\..*\\.shoppinglist" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.shoppinglist" />
+            </intent-filter>
+            <!-- Intent filter for receiving .shoppinglist files via share sheet -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/x-shoppinglist" />
+            </intent-filter>
+        </activity>
 
-        <receiver android:name=".notifications.NotificationReceiver" 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_MIME_TYPES"
+                android:resource="@xml/mime_types" />
+        </provider>
+
+        <receiver android:name=".notifications.NotificationReceiver"
             android:exported="false" />
-        
+
         <receiver android:name=".notifications.BootReceiver"
             android:exported="true">
             <intent-filter>
