@@ -6,21 +6,13 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
-
-        <EditText
-            android:id="@+id/editTextName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_edit_item_name"
-            android:inputType="text"
-            android:maxLines="1">
-            <requestFocus />
-        </EditText>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:text="@string/enter_price"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -28,12 +20,14 @@
         android:layout_marginBottom="16dp">
 
         <EditText
-            android:id="@+id/editTextQuantity"
+            android:id="@+id/editTextPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_edit_item_quantity"
-            android:inputType="number"
-            android:maxLines="1" />
+            android:hint="@string/hint_price"
+            android:inputType="numberDecimal"
+            android:maxLines="1">
+            <requestFocus />
+        </EditText>
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -47,13 +41,6 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             style="@style/Widget.ShoppingList.DialogIconButton.Cancel"
-            android:layout_marginEnd="8dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonReminder"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            style="@style/Widget.ShoppingList.DialogIconButton.Alarm"
             android:layout_marginEnd="8dp" />
 
         <com.google.android.material.button.MaterialButton

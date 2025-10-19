@@ -28,11 +28,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.databinding.ActivityShoppingListDetailBinding
 import com.example.shoppinglist.notifications.ShoppingNotificationManager
+import com.example.shoppinglist.utils.ListExportService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ShoppingListDetailActivity : AppCompatActivity() {
 
@@ -44,7 +49,7 @@ class ShoppingListDetailActivity : AppCompatActivity() {
     private var listName: String = ""
     private var isAddItemExpanded = true
     private var totalPriceView: TextView? = null
-    
+
     companion object {
         const val EXTRA_LIST_ID = "extra_list_id"
         const val EXTRA_LIST_NAME = "extra_list_name"
@@ -52,7 +57,7 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         private const val REQUEST_NOTIFICATION_PERMISSION = 1001
         private const val REQUEST_EXACT_ALARM_PERMISSION = 1002
     }
-    
+
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -72,29 +77,29 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         // Get list info from intent
         listId = intent.getIntExtra(EXTRA_LIST_ID, -1)
         listName = intent.getStringExtra(EXTRA_LIST_NAME) ?: ""
-        
+
         // Restore state
         savedInstanceState?.let {
             isAddItemExpanded = it.getBoolean(KEY_ADD_ITEM_EXPANDED, true)
         }
-        
-        
+
+
         // Set up action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = listName
         supportActionBar?.setDisplayShowTitleEnabled(true)
-        
+
         // Add custom total price view to action bar
         val customView = layoutInflater.inflate(R.layout.actionbar_total_price, null)
         totalPriceView = customView.findViewById(R.id.textViewTotalPrice)
-        
+
         // Set layout parameters to only take needed width on the right
         val layoutParams = androidx.appcompat.app.ActionBar.LayoutParams(
             androidx.appcompat.app.ActionBar.LayoutParams.WRAP_CONTENT,
             androidx.appcompat.app.ActionBar.LayoutParams.WRAP_CONTENT
         )
         layoutParams.gravity = Gravity.END or Gravity.CENTER_VERTICAL
-        
+
         supportActionBar?.setCustomView(customView, layoutParams)
         supportActionBar?.setDisplayShowCustomEnabled(true)
 
@@ -127,7 +132,7 @@ class ShoppingListDetailActivity : AppCompatActivity() {
 
         binding.recyclerViewItems.adapter = adapter
         binding.recyclerViewItems.layoutManager = LinearLayoutManager(this)
-        
+
         // Set up ItemTouchHelper for drag & drop
         itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -140,16 +145,16 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             ): Boolean {
                 val fromPosition = viewHolder.adapterPosition
                 val toPosition = target.adapterPosition
-                
+
                 // Move item in adapter
                 adapter.moveItem(fromPosition, toPosition)
-                
+
                 return true
             }
-            
+
             override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
                 super.onSelectedChanged(viewHolder, actionState)
-                
+
                 when (actionState) {
                     ItemTouchHelper.ACTION_STATE_DRAG -> {
                         // Store original background and add highlight border when drag starts
@@ -160,10 +165,10 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                     }
                 }
             }
-            
+
             override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
                 super.clearView(recyclerView, viewHolder)
-                
+
                 // Restore original background when drag ends
                 val originalBackground = viewHolder.itemView.tag as? android.graphics.drawable.Drawable
                 if (originalBackground != null) {
@@ -173,7 +178,7 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                     // Fallback: remove any background to let CardView show through
                     viewHolder.itemView.background = null
                 }
-                
+
                 // Update positions in database once the drag is complete
                 updateItemPositions()
             }
@@ -182,13 +187,13 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 // Not used for drag & drop
             }
         })
-        
+
         itemTouchHelper.attachToRecyclerView(binding.recyclerViewItems)
 
         // Get ViewModel
         val factory = ShoppingViewModel.ShoppingViewModelFactory((application as ShoppingApplication).repository)
         shoppingViewModel = ViewModelProvider(this, factory)[ShoppingViewModel::class.java]
-        
+
         // Initialize notification manager
         notificationManager = ShoppingNotificationManager.getInstance(this)
 
@@ -200,16 +205,16 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             } else {
                 binding.emptyView.visibility = View.GONE
                 binding.recyclerViewItems.visibility = View.VISIBLE
-                
+
                 // Force layout recalculation after visibility change
                 binding.recyclerViewItems.post {
                     binding.recyclerViewItems.requestLayout()
                 }
             }
-            
+
             adapter.submitList(items)
         }
-        
+
         // Observe total price for this list
         shoppingViewModel.getTotalPriceForList(listId).observe(this) { totalPrice ->
             val price = totalPrice ?: 0.0
@@ -234,7 +239,7 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             } else {
                 // Get position for new item (at the end of the list)
                 val position = adapter.currentList.size
-                
+
                 val newItem = ShoppingItem(
                     listId = listId,
                     name = itemName,
@@ -243,7 +248,7 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                     price = 0.0
                 )
                 shoppingViewModel.insertItem(newItem)
-                
+
                 // Clear input fields
                 binding.editTextItemName.text?.clear()
                 binding.editTextItemQuantity.text?.clear()
@@ -251,28 +256,33 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             }
         }
 
-        
+
+        // Share list button handler
+        binding.fabShareList.setOnClickListener {
+            shareList()
+        }
+
         // Delete list button handler
         binding.fabDeleteList.setOnClickListener {
             showDeleteConfirmationDialog()
         }
-        
+
         // Set up minimize/maximize functionality
         setupAddItemToggle()
         updateAddItemUI()
     }
-    
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean(KEY_ADD_ITEM_EXPANDED, isAddItemExpanded)
     }
-    
+
     private fun setupAddItemToggle() {
         // Minimize button click
         binding.buttonMinimize.setOnClickListener {
             toggleAddItemState()
         }
-        
+
         // Card click to expand when minimized
         binding.cardAddItem.setOnClickListener {
             if (!isAddItemExpanded) {
@@ -280,7 +290,7 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             }
         }
     }
-    
+
     private fun toggleAddItemState() {
         if (isAddItemExpanded) {
             minimizeAddItem()
@@ -288,11 +298,11 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             expandAddItem()
         }
     }
-    
+
     private fun expandAddItem() {
         isAddItemExpanded = true
         updateAddItemUI()
-        
+
         // Focus on name field and show keyboard
         binding.editTextItemName.requestFocus()
         binding.editTextItemName.postDelayed({
@@ -300,17 +310,17 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             imm.showSoftInput(binding.editTextItemName, InputMethodManager.SHOW_IMPLICIT)
         }, 100)
     }
-    
+
     private fun minimizeAddItem() {
         isAddItemExpanded = false
-        
+
         // Hide keyboard
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.editTextItemName.windowToken, 0)
-        
+
         updateAddItemUI()
     }
-    
+
     private fun updateAddItemUI() {
         if (isAddItemExpanded) {
             // Show expanded state with animation
@@ -321,15 +331,15 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 .setDuration(200)
                 .setInterpolator(AccelerateDecelerateInterpolator())
                 .start()
-            
+
             binding.textViewAddItemTitle.text = "Add New Item"
             binding.buttonMinimize.setIconResource(R.drawable.ic_minimize_24)
-            
+
             // Reset header margin to normal
             val headerLayoutParams = binding.layoutHeader.layoutParams as android.view.ViewGroup.MarginLayoutParams
             headerLayoutParams.bottomMargin = resources.getDimensionPixelSize(R.dimen.spacing_l)
             binding.layoutHeader.layoutParams = headerLayoutParams
-            
+
             // Enable card click interception when expanded
             binding.cardAddItem.isFocusable = false
             binding.cardAddItem.isClickable = false
@@ -342,23 +352,23 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                     binding.layoutFormContent.visibility = View.GONE
                 }
                 .start()
-            
+
             binding.textViewAddItemTitle.text = "Add New Item"
             binding.buttonMinimize.setIconResource(R.drawable.ic_expand_more_24)
-            
+
             // Reduce header margin for compact minimized state
             val headerLayoutParams = binding.layoutHeader.layoutParams as android.view.ViewGroup.MarginLayoutParams
             headerLayoutParams.bottomMargin = resources.getDimensionPixelSize(R.dimen.spacing_xs)
             binding.layoutHeader.layoutParams = headerLayoutParams
-            
+
             // Enable card click when minimized
             binding.cardAddItem.isFocusable = true
             binding.cardAddItem.isClickable = true
         }
     }
-    
+
     private lateinit var itemTouchHelper: ItemTouchHelper
-    
+
     private fun updateItemPositions() {
         val currentItems = adapter.currentList.toMutableList()
         // Update positions based on current adapter order
@@ -368,7 +378,7 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         // Save to database
         shoppingViewModel.updateItems(updatedItems)
     }
-    
+
     private fun showEditItemDialog(item: ShoppingItem) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_item, null)
         val editTextName = dialogView.findViewById<EditText>(R.id.editTextName)
@@ -376,37 +386,37 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         val buttonCancel = dialogView.findViewById<Button>(R.id.buttonCancel)
         val buttonReminder = dialogView.findViewById<Button>(R.id.buttonReminder)
         val buttonSave = dialogView.findViewById<Button>(R.id.buttonSave)
-        
+
         // Set current values
         editTextName.setText(item.name)
         editTextQuantity.setText(item.quantity.toString())
-        
+
         val dialog = AlertDialog.Builder(this)
             .setTitle(R.string.edit_item)
             .setView(dialogView)
             .create()
-            
+
         // Set up custom button listeners
         buttonCancel.setOnClickListener {
             dialog.dismiss()
         }
-        
+
         buttonReminder.setOnClickListener {
             showSetReminderDialog(item, dialog, editTextName, editTextQuantity)
         }
-        
+
         buttonSave.setOnClickListener {
             val newName = editTextName.text.toString().trim()
             val quantityStr = editTextQuantity.text.toString().trim()
             val newQuantity = if (quantityStr.isEmpty()) 1 else quantityStr.toInt()
-            
+
             if (newName.isNotEmpty()) {
                 // Create updated item
                 val updatedItem = item.copy(
                     name = newName,
                     quantity = newQuantity
                 )
-                
+
                 // Update in database
                 shoppingViewModel.updateItem(updatedItem)
                 Toast.makeText(this, R.string.item_updated, Toast.LENGTH_SHORT).show()
@@ -415,34 +425,34 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.item_name_empty, Toast.LENGTH_SHORT).show()
             }
         }
-            
+
         dialog.show()
-        
+
         // Show keyboard automatically for dialog
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         editTextName.requestFocus()
     }
-    
+
     private fun showPriceDialog(item: ShoppingItem) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_price_input, null)
         val editTextPrice = dialogView.findViewById<EditText>(R.id.editTextPrice)
         val buttonCancel = dialogView.findViewById<Button>(R.id.buttonCancel)
         val buttonSave = dialogView.findViewById<Button>(R.id.buttonSave)
-        
+
         // Set current price if exists
         if (item.price > 0.0) {
             editTextPrice.setText(String.format("%.2f", item.price))
         }
-        
+
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
-            
+
         // Set up custom button listeners
         buttonCancel.setOnClickListener {
             dialog.dismiss()
         }
-        
+
         buttonSave.setOnClickListener {
             val priceStr = editTextPrice.text.toString().trim()
             val price = if (priceStr.isEmpty()) 0.0 else {
@@ -452,11 +462,11 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                     0.0
                 }
             }
-            
+
             if (price >= 0.0) {
                 // Create updated item with new price
                 val updatedItem = item.copy(price = price)
-                
+
                 // Update in database
                 shoppingViewModel.updateItem(updatedItem)
                 Toast.makeText(this, "Price updated", Toast.LENGTH_SHORT).show()
@@ -465,9 +475,9 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please enter a valid price", Toast.LENGTH_SHORT).show()
             }
         }
-            
+
         dialog.show()
-        
+
         // Show keyboard automatically for dialog
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         editTextPrice.requestFocus()
@@ -485,31 +495,31 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         val timePicker = dialogView.findViewById<TimePicker>(R.id.timePicker)
         val buttonCancelReminder = dialogView.findViewById<Button>(R.id.buttonCancelReminder)
         val buttonSetReminder = dialogView.findViewById<Button>(R.id.buttonSetReminder)
-        
+
         // Set current date and time, or use existing reminder if available and not past
         val calendar = Calendar.getInstance()
         val currentTime = System.currentTimeMillis()
-        
+
         if (item.reminderDateTime != null && item.reminderDateTime > currentTime) {
             // Use existing reminder if it's in the future
             calendar.timeInMillis = item.reminderDateTime
         }
         // Otherwise, calendar already has current date/time
-        
+
         // Setup year picker with range from current year to current year + 10
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
         yearPicker.minValue = currentYear
         yearPicker.maxValue = currentYear + 10
         yearPicker.value = calendar.get(Calendar.YEAR)
-        
+
         // Setup month picker with abbreviated month names
-        val months = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+        val months = arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun",
                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
         monthPicker.minValue = 0
         monthPicker.maxValue = 11
         monthPicker.displayedValues = months
         monthPicker.value = calendar.get(Calendar.MONTH)
-        
+
         // Function to update day picker based on selected year and month
         val updateDayPicker = {
             val selectedYear = yearPicker.value
@@ -518,48 +528,48 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 set(Calendar.YEAR, selectedYear)
                 set(Calendar.MONTH, selectedMonth)
             }.getActualMaximum(Calendar.DAY_OF_MONTH)
-            
+
             val currentDay = dayPicker.value
             dayPicker.minValue = 1
             dayPicker.maxValue = daysInMonth
-            
+
             // Adjust day if it's no longer valid for the new month
             if (currentDay > daysInMonth) {
                 dayPicker.value = daysInMonth
             }
         }
-        
+
         // Setup day picker for initial month/year
         updateDayPicker()
         dayPicker.value = calendar.get(Calendar.DAY_OF_MONTH)
-        
+
         // Update day picker when year or month changes
         yearPicker.setOnValueChangedListener { _, _, _ ->
             updateDayPicker()
         }
-        
+
         monthPicker.setOnValueChangedListener { _, _, _ ->
             updateDayPicker()
         }
-        
+
         timePicker.hour = calendar.get(Calendar.HOUR_OF_DAY)
         timePicker.minute = calendar.get(Calendar.MINUTE)
-        
+
         val reminderDialog = AlertDialog.Builder(this)
             .setTitle(R.string.set_reminder_title)
             .setView(dialogView)
             .create()
-        
+
         buttonCancelReminder.setOnClickListener {
             reminderDialog.dismiss()
         }
-        
+
         buttonSetReminder.setOnClickListener {
             // Get selected date and time
             val selectedYear = yearPicker.value
             val selectedMonth = monthPicker.value
             val selectedDay = dayPicker.value
-            
+
             val selectedCalendar = Calendar.getInstance()
             selectedCalendar.set(
                 selectedYear,
@@ -569,21 +579,21 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 timePicker.minute,
                 0
             )
-            
+
             val reminderDateTime = selectedCalendar.timeInMillis
             val currentTime = System.currentTimeMillis()
-            
+
             // Check if reminder is in the past
             if (reminderDateTime <= currentTime) {
                 Toast.makeText(this, R.string.reminder_past_error, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            
+
             // Get updated item data from parent dialog
             val newName = editTextName.text.toString().trim()
             val quantityStr = editTextQuantity.text.toString().trim()
             val newQuantity = if (quantityStr.isEmpty()) 1 else quantityStr.toInt()
-            
+
             if (newName.isNotEmpty()) {
                 // Create updated item with reminder
                 val updatedItem = item.copy(
@@ -591,10 +601,10 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                     quantity = newQuantity,
                     reminderDateTime = reminderDateTime
                 )
-                
+
                 // Update in database
                 shoppingViewModel.updateItem(updatedItem)
-                
+
                 // Check permissions and schedule notification
                 if (checkAndRequestNotificationPermissions()) {
                     val shoppingList = ShoppingList(id = listId, name = listName)
@@ -603,7 +613,7 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "Reminder saved, but permissions needed for notifications", Toast.LENGTH_LONG).show()
                 }
-                
+
                 // Close both dialogs
                 reminderDialog.dismiss()
                 parentDialog.dismiss()
@@ -611,12 +621,12 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.item_name_empty, Toast.LENGTH_SHORT).show()
             }
         }
-        
+
         reminderDialog.show()
     }
 
     private fun showDeleteConfirmationDialog() {
-        AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
             .setTitle("Delete Shopping List")
             .setMessage("Are you sure you want to delete this shopping list and all its items?")
             .setPositiveButton("Delete") { _, _ ->
@@ -635,15 +645,35 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 shoppingListLiveData.observe(this, observer)
             }
             .setNegativeButton("Cancel", null)
-            .show()
+            .create()
+
+        dialog.setOnShowListener {
+            // Customize buttons with icons
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+                text = ""
+                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_confirm, 0, 0, 0)
+                compoundDrawablePadding = 0
+                contentDescription = "Delete"
+                setTextColor(getColor(R.color.dialog_confirm_green))
+            }
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
+                text = ""
+                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cancel, 0, 0, 0)
+                compoundDrawablePadding = 0
+                contentDescription = "Cancel"
+                setTextColor(getColor(R.color.dialog_cancel_red))
+            }
+        }
+
+        dialog.show()
     }
-    
+
     private fun checkAndRequestNotificationPermissions(): Boolean {
         // Check notification permission for Android 13+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) 
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
                 != PackageManager.PERMISSION_GRANTED) {
-                
+
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)) {
                     // Show explanation dialog
                     showPermissionExplanationDialog()
@@ -658,7 +688,7 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 return false
             }
         }
-        
+
         // Check exact alarm permission for Android 12+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (!notificationManager.canScheduleExactAlarms()) {
@@ -666,12 +696,12 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 return false
             }
         }
-        
+
         return true
     }
-    
+
     private fun showPermissionExplanationDialog() {
-        AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
             .setTitle("Notification Permission Required")
             .setMessage("This app needs notification permission to remind you about your shopping items. Please grant the permission to enable reminders.")
             .setPositiveButton("Grant Permission") { _, _ ->
@@ -682,11 +712,31 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 )
             }
             .setNegativeButton("Cancel", null)
-            .show()
+            .create()
+
+        dialog.setOnShowListener {
+            // Customize buttons with icons
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+                text = ""
+                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_confirm, 0, 0, 0)
+                compoundDrawablePadding = 0
+                contentDescription = "Grant Permission"
+                setTextColor(getColor(R.color.dialog_confirm_green))
+            }
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
+                text = ""
+                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cancel, 0, 0, 0)
+                compoundDrawablePadding = 0
+                contentDescription = "Cancel"
+                setTextColor(getColor(R.color.dialog_cancel_red))
+            }
+        }
+
+        dialog.show()
     }
-    
+
     private fun showExactAlarmPermissionDialog() {
-        AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
             .setTitle("Exact Alarm Permission Required")
             .setMessage("This app needs permission to schedule exact alarms for precise reminders. Please enable this in Settings.")
             .setPositiveButton("Open Settings") { _, _ ->
@@ -698,16 +748,36 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 }
             }
             .setNegativeButton("Cancel", null)
-            .show()
+            .create()
+
+        dialog.setOnShowListener {
+            // Customize buttons with icons
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
+                text = ""
+                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_confirm, 0, 0, 0)
+                compoundDrawablePadding = 0
+                contentDescription = "Open Settings"
+                setTextColor(getColor(R.color.dialog_confirm_green))
+            }
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
+                text = ""
+                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cancel, 0, 0, 0)
+                compoundDrawablePadding = 0
+                contentDescription = "Cancel"
+                setTextColor(getColor(R.color.dialog_cancel_red))
+            }
+        }
+
+        dialog.show()
     }
-    
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        
+
         when (requestCode) {
             REQUEST_NOTIFICATION_PERMISSION -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -717,6 +787,57 @@ class ShoppingListDetailActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun shareList() {
+        lifecycleScope.launch {
+            try {
+                val fileUri = withContext(Dispatchers.IO) {
+                    exportListToFile()
+                }
+
+                if (fileUri != null) {
+                    showShareChooser(fileUri)
+                } else {
+                    Toast.makeText(this@ShoppingListDetailActivity, R.string.export_error, Toast.LENGTH_LONG).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this@ShoppingListDetailActivity, R.string.export_error, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private suspend fun exportListToFile(): Uri? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val repository = (application as ShoppingApplication).repository
+                val listWithItems = repository.getListWithItems(listId) ?: return@withContext null
+
+                val (list, items) = listWithItems
+                val exportService = ListExportService(this@ShoppingListDetailActivity)
+
+                // Clean up old exports before creating new one
+                exportService.cleanupOldExports()
+
+                return@withContext exportService.exportList(list, items)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return@withContext null
+            }
+        }
+    }
+
+    private fun showShareChooser(fileUri: Uri) {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "application/x-shoppinglist"
+            putExtra(Intent.EXTRA_STREAM, fileUri)
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject, listName))
+            putExtra(Intent.EXTRA_TEXT, getString(R.string.share_message, listName))
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_list)))
     }
 
 }

@@ -46,23 +46,16 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
-            app:cornerRadius="@dimen/button_corner_radius"
-            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            style="@style/Widget.ShoppingList.DialogIconButton.Cancel"
             android:layout_marginEnd="@dimen/spacing_m" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
-            app:cornerRadius="@dimen/button_corner_radius"
-            app:backgroundTint="?attr/colorPrimary"
-            android:textColor="?attr/colorOnPrimary" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            style="@style/Widget.ShoppingList.DialogIconButton.Confirm" />
 
     </LinearLayout>
 

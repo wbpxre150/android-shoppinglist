@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dialog Button Colors - Dark Theme Variants -->
+    <color name="dialog_cancel_red">#EF4444</color>
+    <color name="dialog_confirm_green">#6EE7B7</color>
+    <color name="dialog_alarm_orange">#FCD34D</color>
+</resources>
