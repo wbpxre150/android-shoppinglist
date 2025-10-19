@@ -182,6 +182,17 @@ This application has evolved through several major iterations:
 - Added onNewIntent() handler for proper intent re-delivery management
 - Ensured activity lifecycle properly completes after import operations
 
+### v3.3 - Icon-Based Dialog Buttons (e1d8739)
+- Redesigned all dialog buttons to use intuitive icons instead of text
+- Added color-coded icon buttons: red X for cancel, green checkmark for confirm, orange alarm for reminders
+- Created vector drawable icons (ic_cancel, ic_confirm, ic_alarm) with Material Design style
+- Implemented custom button styles with ripple effects for better interaction feedback
+- Added light and dark theme variants for optimal visibility in both modes
+- Updated custom dialog layouts: edit list, edit item, price input, and set reminder dialogs
+- Enhanced AlertDialog instances with icon buttons and proper content descriptions
+- Improved accessibility with descriptive labels for screen readers
+- Maintained consistent 48dp touch targets for Material Design compliance
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
