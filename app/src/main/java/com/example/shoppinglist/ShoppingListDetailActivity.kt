@@ -396,6 +396,9 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             .setView(dialogView)
             .create()
 
+        // Set transparent background for MaterialCardView styling
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
         // Set up custom button listeners
         buttonCancel.setOnClickListener {
             dialog.dismiss()
@@ -447,6 +450,9 @@ class ShoppingListDetailActivity : AppCompatActivity() {
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
+
+        // Set transparent background for MaterialCardView styling
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         // Set up custom button listeners
         buttonCancel.setOnClickListener {
@@ -559,6 +565,9 @@ class ShoppingListDetailActivity : AppCompatActivity() {
             .setTitle(R.string.set_reminder_title)
             .setView(dialogView)
             .create()
+
+        // Set transparent background for MaterialCardView styling
+        reminderDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         buttonCancelReminder.setOnClickListener {
             reminderDialog.dismiss()

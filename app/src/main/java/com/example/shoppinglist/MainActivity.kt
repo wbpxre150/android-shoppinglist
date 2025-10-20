@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        
+
         val callback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0
         ) {
@@ -77,10 +77,10 @@ class MainActivity : AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // Not used
             }
-            
+
             override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
                 super.onSelectedChanged(viewHolder, actionState)
-                
+
                 when (actionState) {
                     ItemTouchHelper.ACTION_STATE_DRAG -> {
                         // Store original background and add highlight border when drag starts
@@ -91,10 +91,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            
+
             override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
                 super.clearView(recyclerView, viewHolder)
-                
+
                 // Restore original background when drag ends
                 val originalBackground = viewHolder.itemView.tag as? android.graphics.drawable.Drawable
                 if (originalBackground != null) {
@@ -104,11 +104,11 @@ class MainActivity : AppCompatActivity() {
                     // Fallback: remove any background to let CardView show through
                     viewHolder.itemView.background = null
                 }
-                
+
                 updateListPositions()
             }
         }
-        
+
         itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
 
@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
                 binding.emptyView.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
             }
-            
+
             adapter.submitList(listsWithCounts)
         }
 
@@ -134,47 +134,50 @@ class MainActivity : AppCompatActivity() {
             newShoppingListLauncher.launch(intent)
         }
     }
-    
+
     private fun updateListPositions() {
         val currentItems = adapter.currentList
         val updatedLists = mutableListOf<ShoppingList>()
-        
+
         for (i in currentItems.indices) {
             val item = currentItems[i]
             val updatedList = item.shoppingList.copy(position = i)
             updatedLists.add(updatedList)
         }
-        
+
         if (updatedLists.isNotEmpty()) {
             shoppingViewModel.updateShoppingLists(updatedLists)
         }
     }
-    
+
     private fun showEditListDialog(shoppingList: ShoppingList) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_list, null)
         val editTextListName = dialogView.findViewById<EditText>(R.id.editTextListName)
         val buttonCancel = dialogView.findViewById<Button>(R.id.buttonCancel)
         val buttonSave = dialogView.findViewById<Button>(R.id.buttonSave)
-        
+
         // Set current value
         editTextListName.setText(shoppingList.name)
-        
+
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
-            
+
+        // Set transparent background for MaterialCardView styling
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
         // Set up button listeners
         buttonCancel.setOnClickListener {
             dialog.dismiss()
         }
-        
+
         buttonSave.setOnClickListener {
             val newName = editTextListName.text.toString().trim()
-            
+
             if (newName.isNotEmpty()) {
                 // Create updated list
                 val updatedList = shoppingList.copy(name = newName)
-                
+
                 // Update in database
                 shoppingViewModel.update(updatedList)
                 Toast.makeText(this, "List renamed successfully", Toast.LENGTH_SHORT).show()
@@ -183,13 +186,13 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "List name cannot be empty", Toast.LENGTH_SHORT).show()
             }
         }
-            
+
         dialog.show()
-        
+
         // Show keyboard automatically for dialog
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         editTextListName.requestFocus()
         editTextListName.selectAll()
     }
-    
+
 }
