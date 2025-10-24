@@ -16,9 +16,9 @@ Repo: https://github.com/wbpxre150/android-shoppinglist.git
 Binaries: https://github.com/wbpxre150/android-shoppinglist/releases/download/9.0/shoppinglist.apk
 
 Builds:
-  - versionName: 1.0
+  - versionName: "10.0"
     versionCode: 1
-    commit: 9.0
+    commit: "10.0"
     subdir: app
     sudo:
       - apt-get update
@@ -31,5 +31,5 @@ AllowedAPKSigningKeys: 480b18292c6be43e3829199c4d6a169b773862144fed576c303f634c4
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 9.0
+CurrentVersion: "10.0"
 CurrentVersionCode: 1
