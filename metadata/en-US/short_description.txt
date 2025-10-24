@@ -1,0 +1,1 @@
+A Shopping List Application with reminders, price tracking and the ability to share lists.

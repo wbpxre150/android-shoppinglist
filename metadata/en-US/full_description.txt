@@ -1,0 +1,96 @@
+A privacy-focused, offline-first shopping list application built with modern Android architecture. No internet connection required, no tracking, no ads - just your shopping lists stored securely on your device.
+
+CORE FEATURES
+
+• Multiple Shopping Lists - Organize items by store, occasion, or category
+• Smart Item Management - Add, edit, and reorder items with drag-and-drop
+• Purchase Tracking - Check off items as you shop with visual indicators
+• Quantity & Pricing - Track quantities and prices with automatic total calculation
+• Item Reminders - Set date/time reminders for shopping trips
+• List Sharing - Export and share lists as .shoppinglist files
+• Quick Rename - Double-tap any list to rename it instantly
+• Offline Storage - All data stored locally using Room database
+
+USER INTERFACE
+
+Material Design 3 with comprehensive dark theme support provides a modern, accessible experience. The compact layout maximizes information density while maintaining excellent readability. Smooth animations and intuitive gestures make list management effortless.
+
+• Adaptive Light/Dark Themes - Automatically follows system preference
+• Collapsible Add-Item Form - Cleaner interface when not adding items
+• Visual Purchase Overlay - Clearly shows completed items
+• Smart Quantity Badges - Displayed only when quantity exceeds 1
+• Real-Time Price Totals - See your shopping budget in the action bar
+• Drag-and-Drop Reordering - Organize lists and items exactly as you prefer
+• Icon-Based Dialogs - Intuitive color-coded buttons for all actions
+
+NOTIFICATION SYSTEM
+
+Never forget a shopping trip with comprehensive reminder support:
+
+• Smart Reminders - Set precise date/time notifications for individual items
+• Rich Notifications - See item details, quantities, and prices
+• Quick Actions - Mark purchased, snooze 30 minutes, or view full list
+• Boot Persistence - Reminders survive device restarts
+• Android 13+ Compatible - Seamless permission handling
+
+IMPORT & EXPORT
+
+Share shopping lists with family, friends, or between your own devices:
+
+• Export to .shoppinglist Files - Standard JSON format for compatibility
+• Share via Any App - Email, messaging, cloud storage, or file sharing
+• Import with Duplicate Handling - Smart conflict resolution
+• Complete List Transfer - Items, quantities, prices, and purchase status
+
+PRIVACY & SECURITY
+
+Your shopping data belongs to you. This app:
+
+• Never Connects to the Internet - Completely offline functionality
+• No Tracking or Analytics - Zero data collection
+• No Advertisements - Clean, distraction-free experience
+• No Account Required - Start using immediately
+• Local Storage Only - Data stays on your device
+• Open Source - Transparent, auditable code
+
+TECHNICAL HIGHLIGHTS
+
+Built with modern Android best practices:
+
+• MVVM Architecture - Clean separation of concerns
+• Repository Pattern - Single source of truth for data
+• Kotlin Coroutines - Smooth, responsive user experience
+• Room Database - Reliable local persistence with migrations
+• View Binding - Type-safe view references
+• Material Design 3 - Latest UI component library
+• Lifecycle-Aware Components - Prevents memory leaks
+• Foreign Key Relationships - Data integrity with cascade delete
+
+PERMISSIONS EXPLAINED
+
+• POST_NOTIFICATIONS - Display reminder notifications
+• SCHEDULE_EXACT_ALARM - Precise reminder timing
+• USE_EXACT_ALARM - Alternative exact alarm API
+• WAKE_LOCK - Ensure notifications display even when device sleeps
+• RECEIVE_BOOT_COMPLETED - Restore reminders after device restart
+
+All permissions are used exclusively for reminder functionality. No network permissions are requested.
+
+SYSTEM REQUIREMENTS
+
+• Android 7.0 (API 24) or higher
+• No internet connection required
+• Works on phones and tablets
+
+IDEAL FOR
+
+• Weekly grocery shopping
+• Household supplies management
+• Party and event planning
+• Gift shopping lists
+• Hardware store trips
+• Pharmacy reminders
+• Meal prep ingredient tracking
+• Shared household shopping
+
+This application is perfect for anyone who values privacy, offline functionality, and straightforward design. No unnecessary features, no bloat - just a reliable shopping list that works exactly as expected.

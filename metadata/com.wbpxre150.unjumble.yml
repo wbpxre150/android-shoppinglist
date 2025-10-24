@@ -1,0 +1,35 @@
+Categories:
+  - Shopping List
+License: MIT
+AuthorName: Adam Bullock
+AuthorEmail: wbpxre150@outlook.com
+AuthorWebSite: https://unjumble.au
+SourceCode: https://github.com/wbpxre150/android-shoppinglist
+IssueTracker: https://github.com/wbpxre150/android-shoppinglist/issues
+Changelog: https://github.com/wbpxre150/android-shoppinglist/releases
+Donate: https://www.paypal.me/wbpxre150
+
+AutoName: ShoppingList
+
+RepoType: git
+Repo: https://github.com/wbpxre150/android-shoppinglist.git
+Binaries: https://github.com/wbpxre150/android-shoppinglist/releases/download/8.0/shoppinglist.apk
+
+Builds:
+  - versionName: 1.0
+    versionCode: 1
+    commit: v1
+    subdir: app
+    sudo:
+      - apt-get update
+      - apt-get install -y openjdk-17-jdk-headless
+      - update-java-alternatives -a
+    gradle:
+      - yes
+
+AllowedAPKSigningKeys: 480b18292c6be43e3829199c4d6a169b773862144fed576c303f634c4e146ec5
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: 8.0
+CurrentVersionCode: 1
