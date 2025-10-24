@@ -17,12 +17,15 @@ Binaries: https://github.com/wbpxre150/android-shoppinglist/releases/download/10
 
 Builds:
   - versionName: '10.0'
-    versionCode: 1
+    versionCode: 10
     commit: '10.0'
     subdir: app
     sudo:
-      - apt-get update
-      - apt-get install -y openjdk-17-jdk-headless
+      - sudo apt install -y wget apt-transport-https
+      - wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | tee /usr/share/keyrings/adoptium.asc
+      - echo "deb [signed-by=/usr/share/keyrings/adoptium.asc] https://packages.adoptium.net/artifactory/deb bookworm main" | tee /etc/apt/sources.list.d/adoptium.list
+      - apt update
+      - apt install -y temurin-21-jdk
       - update-java-alternatives -a
     gradle:
       - yes
@@ -32,4 +35,4 @@ AllowedAPKSigningKeys: 480b18292c6be43e3829199c4d6a169b773862144fed576c303f634c4
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
 CurrentVersion: '10.0'
-CurrentVersionCode: 1
+CurrentVersionCode: 10
