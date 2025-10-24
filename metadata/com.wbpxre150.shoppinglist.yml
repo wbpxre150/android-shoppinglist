@@ -31,5 +31,5 @@ AllowedAPKSigningKeys: 480b18292c6be43e3829199c4d6a169b773862144fed576c303f634c4
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 8.0
+CurrentVersion: 9.0
 CurrentVersionCode: 1
