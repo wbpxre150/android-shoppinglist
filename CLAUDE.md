@@ -3,6 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Build Commands
+- `JAVA_HOME=/usr/lib/jvm/java-21-openjdk` - Prefix for gradle commands
 - Build project: `./gradlew build`
 - Run tests: `./gradlew test`
 - Run single test: `./gradlew test --tests "com.example.shoppinglist.TestClassName.testMethodName"`

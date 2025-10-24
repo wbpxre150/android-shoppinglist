@@ -1,20 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.shoppinglist.app-mergeDebugResources-37:/values-v16/values-v16.xml",
+            "outputFile": "com.wbpxre150.shoppinglist.app-mergeDebugResources-37:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/data/data/com.termux/files/home/.gradle/caches/transforms-3/a00fbc8a76265a9fb558d8c7e8712746/transformed/core-1.12.0/res/values-v16/values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
-                    }
-                },
-                {
-                    "source": "/data/data/com.termux/files/home/.gradle/caches/transforms-3/6fde273147cdcb92ee0f1fcf45a54be9/transformed/appcompat-1.6.1/res/values-v16/values-v16.xml",
+                    "source": "/home/adam/.gradle/caches/transforms-3/1334f1d5f4551f52f81357415aaef979/transformed/appcompat-1.6.1/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -30,6 +20,16 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "/home/adam/.gradle/caches/transforms-3/1c8382df8be7673e6c577948088f675a/transformed/core-1.12.0/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
                     }
                 }
             ]

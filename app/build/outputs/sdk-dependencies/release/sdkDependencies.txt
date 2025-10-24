@@ -618,10 +618,10 @@ library {
   maven_library {
     groupId: "com.google.android.material"
     artifactId: "material"
-    version: "1.10.0"
+    version: "1.11.0"
   }
   digests {
-    sha256: "- N\344\361\026\271\210\246\246\265\333\214\364=\343\370\247M\n\341\272\027Xo\220\252\343\216>\032-"
+    sha256: "\216\257\1779\236\340\224\334\023I\\6\347\324\357G\036\247\357\2129\236My\311kP\375O\202E\f"
   }
   repo_index {
   }
@@ -863,6 +863,19 @@ library {
     sha256: "\312nP3\"\262\346\003t\302\263l\225\305\v\026p\235\223\210\3766\350\017\262=\341\373\367\246\353\225"
   }
   repo_index {
+  }
+}
+library {
+  maven_library {
+    groupId: "com.google.code.gson"
+    artifactId: "gson"
+    version: "2.10.1"
+  }
+  digests {
+    sha256: "BA\301Jw\'\303O\356\246P~\310\0011\212=J\220\360p\344RV\201\a\237\271N\344\305\223"
+  }
+  repo_index {
+    value: 1
   }
 }
 library_dependencies {
@@ -1443,6 +1456,7 @@ module_dependencies {
   dependency_index: 17
   dependency_index: 63
   dependency_index: 54
+  dependency_index: 72
 }
 repositories {
   maven_repo {

@@ -1,32 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView 
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    android:layout_marginHorizontal="@dimen/screen_margin_horizontal"
+    android:layout_marginVertical="@dimen/list_item_spacing"
+    android:backgroundTint="?attr/colorSurfaceContainer"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:strokeColor="?attr/colorOutlineVariant"
+    app:strokeWidth="1dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/card_padding">
+
+        <ImageView
+            android:id="@+id/iconShoppingCart"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_shopping_cart_24"
+            android:background="@drawable/gradient_primary"
+            android:backgroundTint="?attr/colorPrimaryContainer"
+            android:scaleType="centerInside"
+            app:tint="?attr/colorOnPrimaryContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/textViewListName"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_marginStart="@dimen/spacing_l"
+            android:layout_marginEnd="@dimen/spacing_s"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            android:textColor="?attr/colorOnSurface"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/iconShoppingCart"
+            app:layout_constraintEnd_toStartOf="@id/textViewItemBadge"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/textViewItemCount"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Weekly Groceries" />
 
         <TextView
             android:id="@+id/textViewItemCount"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="14sp" />
+            android:layout_marginStart="@dimen/spacing_l"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:layout_marginEnd="@dimen/spacing_s"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            app:layout_constraintStart_toEndOf="@id/iconShoppingCart"
+            app:layout_constraintEnd_toStartOf="@id/textViewItemBadge"
+            app:layout_constraintTop_toBottomOf="@id/textViewListName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="5 items remaining" />
 
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/textViewItemBadge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="32dp"
+            android:paddingHorizontal="@dimen/spacing_s"
+            android:paddingVertical="@dimen/spacing_xs"
+            android:background="@drawable/gradient_primary"
+            android:backgroundTint="?attr/colorSecondaryContainer"
+            android:textAppearance="?attr/textAppearanceLabelMedium"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="12" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

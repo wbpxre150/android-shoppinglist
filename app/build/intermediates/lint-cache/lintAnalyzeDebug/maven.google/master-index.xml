@@ -130,6 +130,7 @@
   <androidx.test.janktesthelper/>
   <androidx.test.services/>
   <androidx.test.uiautomator/>
+  <androidx.text/>
   <androidx.textclassifier/>
   <androidx.tracing/>
   <androidx.transition/>
@@ -153,6 +154,7 @@
   <androidx.xr.arcore/>
   <androidx.xr.compose/>
   <androidx.xr.compose.material3/>
+  <androidx.xr.projected/>
   <androidx.xr.runtime/>
   <androidx.xr.scenecore/>
   <com.android/>
@@ -169,6 +171,7 @@
   <com.android.designcompose/>
   <com.android.dynamic-feature/>
   <com.android.experimental.built-in-kotlin/>
+  <com.android.extensions.xr/>
   <com.android.fused-library/>
   <com.android.identity/>
   <com.android.installreferrer/>
@@ -228,6 +231,7 @@
   <com.google.ai.client.generativeai/>
   <com.google.ai.edge.aicore/>
   <com.google.ai.edge.litert/>
+  <com.google.ai.edge.litertlm/>
   <com.google.ai.edge.localagents/>
   <com.google.ambient.crossdevice/>
   <com.google.android.ads/>
@@ -243,6 +247,7 @@
   <com.google.android.flexbox/>
   <com.google.android.games/>
   <com.google.android.gms/>
+  <com.google.android.gms.oss-licenses-plugin/>
   <com.google.android.gms.strict-version-matcher-plugin/>
   <com.google.android.instantapps/>
   <com.google.android.instantapps.thirdpartycompat/>

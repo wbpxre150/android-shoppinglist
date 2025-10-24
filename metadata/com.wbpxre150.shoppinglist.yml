@@ -13,12 +13,12 @@ AutoName: ShoppingList
 
 RepoType: git
 Repo: https://github.com/wbpxre150/android-shoppinglist.git
-Binaries: https://github.com/wbpxre150/android-shoppinglist/releases/download/8.0/shoppinglist.apk
+Binaries: https://github.com/wbpxre150/android-shoppinglist/releases/download/9.0/shoppinglist.apk
 
 Builds:
   - versionName: 1.0
     versionCode: 1
-    commit: v1
+    commit: 9.0
     subdir: app
     sudo:
       - apt-get update

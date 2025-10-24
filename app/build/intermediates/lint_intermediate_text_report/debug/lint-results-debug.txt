@@ -1,4 +1,30 @@
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:24: Warning: Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details. [OldTargetApi]
+/home/adam/apps/android-shoppinglist/app/src/main/java/com/wbpxre150/shoppinglist/ShoppingListDetailActivity.kt:719: Warning: Field requires API level 33 (current min is 24): android.Manifest.permission#POST_NOTIFICATIONS [InlinedApi]
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "InlinedApi":
+   This check scans through all the Android API field references in the
+   application and flags certain constants, such as static final integers and
+   Strings, which were introduced in later versions. These will actually be
+   copied into the class files rather than being referenced, which means that
+   the value is available even when running on older devices. In some cases
+   that's fine, and in other cases it can result in a runtime crash or
+   incorrect behavior. It depends on the context, so consider the code
+   carefully and decide whether it's safe and can be suppressed or whether the
+   code needs to be guarded.
+
+   If you really want to use this API and don't need to support older devices
+   just set the minSdkVersion in your build.gradle or AndroidManifest.xml
+   files.
+
+   If your code is deliberately accessing newer APIs, and you have ensured
+   (e.g. with conditional execution) that this code will only ever be called
+   on a supported platform, then you can annotate your class or method with
+   the @TargetApi annotation specifying the local minimum SDK to apply, such
+   as @TargetApi(11), such that this check considers 11 rather than your
+   manifest file's minimum SDK as the required API level.
+
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:24: Warning: Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details. [OldTargetApi]
         targetSdk = 34
         ~~~~~~~~~~~~~~
 
@@ -20,46 +46,57 @@
 
    https://developer.android.com/distribute/best-practices/develop/target-sdk.html
 
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:67: Warning: A newer version of androidx.core:core-ktx than 1.12.0 is available: 1.16.0 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/src/main/java/com/wbpxre150/shoppinglist/ShoppingListDetailActivity.kt:93: Warning: Avoid passing null as the view root (needed to resolve layout parameters on the inflated layout's root element) [InflateParams]
+        val customView = layoutInflater.inflate(R.layout.actionbar_total_price, null)
+                                                                                ~~~~
+
+   Explanation for issues of type "InflateParams":
+   When inflating a layout, avoid passing in null as the parent view, since
+   otherwise any layout parameters on the root of the inflated layout will be
+   ignored.
+
+   https://www.bignerdranch.com/blog/understanding-androids-layoutinflater-inflate/
+
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:67: Warning: A newer version of androidx.core:core-ktx than 1.12.0 is available: 1.17.0 [GradleDependency]
     implementation("androidx.core:core-ktx:1.12.0")
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:68: Warning: A newer version of androidx.appcompat:appcompat than 1.6.1 is available: 1.7.1 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:68: Warning: A newer version of androidx.appcompat:appcompat than 1.6.1 is available: 1.7.1 [GradleDependency]
     implementation("androidx.appcompat:appcompat:1.6.1")
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:69: Warning: A newer version of com.google.android.material:material than 1.10.0 is available: 1.12.0 [GradleDependency]
-    implementation("com.google.android.material:material:1.10.0")
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:69: Warning: A newer version of com.google.android.material:material than 1.11.0 is available: 1.13.0 [GradleDependency]
+    implementation("com.google.android.material:material:1.11.0")
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:70: Warning: A newer version of androidx.constraintlayout:constraintlayout than 2.1.4 is available: 2.2.1 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:70: Warning: A newer version of androidx.constraintlayout:constraintlayout than 2.1.4 is available: 2.2.1 [GradleDependency]
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:73: Warning: A newer version of androidx.room:room-runtime than 2.6.0 is available: 2.7.2 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:73: Warning: A newer version of androidx.room:room-runtime than 2.6.0 is available: 2.8.3 [GradleDependency]
     implementation("androidx.room:room-runtime:2.6.0")
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:74: Warning: A newer version of androidx.room:room-ktx than 2.6.0 is available: 2.7.2 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:74: Warning: A newer version of androidx.room:room-ktx than 2.6.0 is available: 2.8.3 [GradleDependency]
     implementation("androidx.room:room-ktx:2.6.0")
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:75: Warning: A newer version of androidx.room:room-compiler than 2.6.0 is available: 2.7.2 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:75: Warning: A newer version of androidx.room:room-compiler than 2.6.0 is available: 2.8.3 [GradleDependency]
     kapt("androidx.room:room-compiler:2.6.0")
           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:78: Warning: A newer version of androidx.lifecycle:lifecycle-viewmodel-ktx than 2.6.2 is available: 2.9.2 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:78: Warning: A newer version of androidx.lifecycle:lifecycle-viewmodel-ktx than 2.6.2 is available: 2.9.4 [GradleDependency]
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:79: Warning: A newer version of androidx.lifecycle:lifecycle-livedata-ktx than 2.6.2 is available: 2.9.2 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:79: Warning: A newer version of androidx.lifecycle:lifecycle-livedata-ktx than 2.6.2 is available: 2.9.4 [GradleDependency]
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:80: Warning: A newer version of androidx.lifecycle:lifecycle-common-java8 than 2.6.2 is available: 2.9.2 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:80: Warning: A newer version of androidx.lifecycle:lifecycle-common-java8 than 2.6.2 is available: 2.9.4 [GradleDependency]
     implementation("androidx.lifecycle:lifecycle-common-java8:2.6.2")
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:83: Warning: A newer version of org.jetbrains.kotlin:kotlin-stdlib than 1.9.0 is available: 1.9.22 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:83: Warning: A newer version of org.jetbrains.kotlin:kotlin-stdlib than 1.9.0 is available: 2.0.21 [GradleDependency]
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:88: Warning: A newer version of androidx.recyclerview:recyclerview than 1.3.2 is available: 1.4.0 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:88: Warning: A newer version of androidx.recyclerview:recyclerview than 1.3.2 is available: 1.4.0 [GradleDependency]
     implementation("androidx.recyclerview:recyclerview:1.3.2")
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:93: Warning: A newer version of androidx.test.ext:junit than 1.1.5 is available: 1.2.1 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:96: Warning: A newer version of androidx.test.ext:junit than 1.1.5 is available: 1.3.0 [GradleDependency]
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:94: Warning: A newer version of androidx.test.espresso:espresso-core than 3.5.1 is available: 3.6.1 [GradleDependency]
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:97: Warning: A newer version of androidx.test.espresso:espresso-core than 3.5.1 is available: 3.7.0 [GradleDependency]
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -70,7 +107,41 @@
    However, you may simply not be aware that a more recent version is
    available, and that is what this lint check helps find.
 
-/data/data/com.termux/files/home/shoppinglist/app/build.gradle.kts:75: Warning: This library supports using KSP instead of kapt, which greatly improves performance. Learn more: https://developer.android.com/studio/build/migrate-to-ksp [KaptUsageInsteadOfKsp]
+/home/adam/apps/android-shoppinglist/app/src/main/java/com/wbpxre150/shoppinglist/notifications/NotificationManager.kt:80: Warning: Unnecessary; SDK_INT is always >= 24 [ObsoleteSdkInt]
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/java/com/wbpxre150/shoppinglist/notifications/NotificationManager.kt:203: Warning: Unnecessary; SDK_INT is always >= 24 [ObsoleteSdkInt]
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "ObsoleteSdkInt":
+   This check flags version checks that are not necessary, because the
+   minSdkVersion (or surrounding known API level) is already at least as high
+   as the version checked for.
+
+   Similarly, it also looks for resources in -vNN folders, such as values-v14
+   where the version qualifier is less than or equal to the minSdkVersion,
+   where the contents should be merged into the best folder.
+
+/home/adam/apps/android-shoppinglist/app/src/main/java/com/wbpxre150/shoppinglist/notifications/NotificationManager.kt:36: Warning: Do not place Android context classes in static fields (static reference to ShoppingNotificationManager which has field context pointing to Context); this is a memory leak [StaticFieldLeak]
+        @Volatile
+        ^
+
+   Explanation for issues of type "StaticFieldLeak":
+   A static field will leak contexts.
+
+   Non-static inner classes have an implicit reference to their outer class.
+   If that outer class is for example a Fragment or Activity, then this
+   reference means that the long-running handler/loader/task will hold a
+   reference to the activity which prevents it from getting garbage
+   collected.
+
+   Similarly, direct field references to activities and fragments from these
+   longer running instances can cause leaks.
+
+   ViewModel classes should never point to Views or non-application Contexts.
+
+/home/adam/apps/android-shoppinglist/app/build.gradle.kts:75: Warning: This library supports using KSP instead of kapt, which greatly improves performance. Learn more: https://developer.android.com/studio/build/migrate-to-ksp [KaptUsageInsteadOfKsp]
     kapt("androidx.room:room-compiler:2.6.0")
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -80,24 +151,142 @@
 
    https://developer.android.com/studio/build/migrate-to-ksp
 
-/data/data/com.termux/files/home/shoppinglist/app/src/main/res/values/colors.xml:3: Warning: The resource R.color.purple_200 appears to be unused [UnusedResources]
-    <color name="purple_200">#FFBB86FC</color>
-           ~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/src/main/res/values/colors.xml:10: Warning: The resource R.color.light_gray appears to be unused [UnusedResources]
-    <color name="light_gray">#FFEEEEEE</color>
-           ~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/src/main/res/values/colors.xml:11: Warning: The resource R.color.green appears to be unused [UnusedResources]
-    <color name="green">#FF4CAF50</color>
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_import_list.xml:7: Warning: Possible overdraw: Root element paints background ?attr/colorSurface with a theme that also paints a background (inferred theme is @style/Theme.ShoppingList) [Overdraw]
+    android:background="?attr/colorSurface"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_main.xml:8: Warning: Possible overdraw: Root element paints background ?attr/colorSurface with a theme that also paints a background (inferred theme is @style/Theme.ShoppingList) [Overdraw]
+    android:background="?attr/colorSurface"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_new_shopping_list.xml:7: Warning: Possible overdraw: Root element paints background ?attr/colorSurface with a theme that also paints a background (inferred theme is @style/Theme.ShoppingList) [Overdraw]
+    android:background="?attr/colorSurface">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "Overdraw":
+   If you set a background drawable on a root view, then you should use a
+   custom theme where the theme background is null. Otherwise, the theme
+   background will be painted first, only to have your custom background
+   completely cover it; this is called "overdraw".
+
+   NOTE: This detector relies on figuring out which layouts are associated
+   with which activities based on scanning the Java code, and it's currently
+   doing that using an inexact pattern matching algorithm. Therefore, it can
+   incorrectly conclude which activity the layout is associated with and then
+   wrongly complain that a background-theme is hidden.
+
+   If you want your custom background on multiple pages, then you should
+   consider making a custom theme with your custom background and just using
+   that theme instead of a root element background.
+
+   Of course it's possible that your custom drawable is translucent and you
+   want it to be mixed with the background. However, you will get better
+   performance if you pre-mix the background with your drawable and use that
+   resulting image or color as a custom theme background instead.
+
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/colors.xml:68: Warning: The resource R.color.accent_amber appears to be unused [UnusedResources]
+    <color name="accent_amber">#F59E0B</color>
+           ~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/colors.xml:69: Warning: The resource R.color.accent_amber_container appears to be unused [UnusedResources]
+    <color name="accent_amber_container">#FEF3C7</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/colors.xml:70: Warning: The resource R.color.success_green appears to be unused [UnusedResources]
+    <color name="success_green">#10B981</color>
+           ~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/colors.xml:71: Warning: The resource R.color.success_green_container appears to be unused [UnusedResources]
+    <color name="success_green_container">#D1FAE5</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/colors.xml:79: Warning: The resource R.color.text_primary_dark appears to be unused [UnusedResources]
+    <color name="text_primary_dark">#E6E1E5</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/colors.xml:80: Warning: The resource R.color.text_secondary_dark appears to be unused [UnusedResources]
+    <color name="text_secondary_dark">#CAC4D0</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/colors.xml:81: Warning: The resource R.color.text_disabled_dark appears to be unused [UnusedResources]
+    <color name="text_disabled_dark">#79747E</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/colors.xml:82: Warning: The resource R.color.text_primary_light appears to be unused [UnusedResources]
+    <color name="text_primary_light">#1C1B1F</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/colors.xml:83: Warning: The resource R.color.text_secondary_light appears to be unused [UnusedResources]
+    <color name="text_secondary_light">#49454F</color>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/colors.xml:86: Warning: The resource R.color.black appears to be unused [UnusedResources]
+    <color name="black">#FF000000</color>
            ~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/src/main/res/values/colors.xml:12: Warning: The resource R.color.gray appears to be unused [UnusedResources]
-    <color name="gray">#FFA0A0A0</color>
-           ~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/src/main/res/values/strings.xml:14: Warning: The resource R.string.mark_purchased appears to be unused [UnusedResources]
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/colors.xml:87: Warning: The resource R.color.white appears to be unused [UnusedResources]
+    <color name="white">#FFFFFFFF</color>
+           ~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:22: Warning: The resource R.dimen.card_elevation_pressed appears to be unused [UnusedResources]
+    <dimen name="card_elevation_pressed">8dp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:42: Warning: The resource R.dimen.text_display_large appears to be unused [UnusedResources]
+    <dimen name="text_display_large">57sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:43: Warning: The resource R.dimen.text_display_medium appears to be unused [UnusedResources]
+    <dimen name="text_display_medium">45sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:44: Warning: The resource R.dimen.text_display_small appears to be unused [UnusedResources]
+    <dimen name="text_display_small">36sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:47: Warning: The resource R.dimen.text_headline_medium appears to be unused [UnusedResources]
+    <dimen name="text_headline_medium">28sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:48: Warning: The resource R.dimen.text_headline_small appears to be unused [UnusedResources]
+    <dimen name="text_headline_small">24sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:52: Warning: The resource R.dimen.text_title_small appears to be unused [UnusedResources]
+    <dimen name="text_title_small">14sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:56: Warning: The resource R.dimen.text_body_small appears to be unused [UnusedResources]
+    <dimen name="text_body_small">12sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:58: Warning: The resource R.dimen.text_label_large appears to be unused [UnusedResources]
+    <dimen name="text_label_large">14sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:59: Warning: The resource R.dimen.text_label_medium appears to be unused [UnusedResources]
+    <dimen name="text_label_medium">12sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:60: Warning: The resource R.dimen.text_label_small appears to be unused [UnusedResources]
+    <dimen name="text_label_small">11sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:63: Warning: The resource R.dimen.line_height_title_large appears to be unused [UnusedResources]
+    <dimen name="line_height_title_large">28sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:64: Warning: The resource R.dimen.line_height_title_medium appears to be unused [UnusedResources]
+    <dimen name="line_height_title_medium">24sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:65: Warning: The resource R.dimen.line_height_body_large appears to be unused [UnusedResources]
+    <dimen name="line_height_body_large">24sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:66: Warning: The resource R.dimen.line_height_body_medium appears to be unused [UnusedResources]
+    <dimen name="line_height_body_medium">20sp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:70: Warning: The resource R.dimen.screen_margin_vertical appears to be unused [UnusedResources]
+    <dimen name="screen_margin_vertical">16dp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/dimens.xml:72: Warning: The resource R.dimen.section_spacing appears to be unused [UnusedResources]
+    <dimen name="section_spacing">24dp</dimen>
+           ~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/drawable/ic_arrow_back_24.xml:1: Warning: The resource R.drawable.ic_arrow_back_24 appears to be unused [UnusedResources]
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+^
+/home/adam/apps/android-shoppinglist/app/src/main/res/color/ripple_alarm.xml:2: Warning: The resource R.color.ripple_alarm appears to be unused [UnusedResources]
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+^
+/home/adam/apps/android-shoppinglist/app/src/main/res/color/ripple_cancel.xml:2: Warning: The resource R.color.ripple_cancel appears to be unused [UnusedResources]
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+^
+/home/adam/apps/android-shoppinglist/app/src/main/res/color/ripple_confirm.xml:2: Warning: The resource R.color.ripple_confirm appears to be unused [UnusedResources]
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+^
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/strings.xml:14: Warning: The resource R.string.mark_purchased appears to be unused [UnusedResources]
     <string name="mark_purchased">Mark as Purchased</string>
             ~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/src/main/res/values/strings.xml:15: Warning: The resource R.string.mark_not_purchased appears to be unused [UnusedResources]
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/strings.xml:15: Warning: The resource R.string.mark_not_purchased appears to be unused [UnusedResources]
     <string name="mark_not_purchased">Mark as Not Purchased</string>
             ~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/values/strings.xml:35: Warning: The resource R.string.set_reminder appears to be unused [UnusedResources]
+    <string name="set_reminder">Set Reminder</string>
+            ~~~~~~~~~~~~~~~~~~~
 
    Explanation for issues of type "UnusedResources":
    Unused resources make applications larger and slow down builds.
@@ -113,12 +302,15 @@
    lint.unused-resources.exclude-tests =true.
    ,
 
-/data/data/com.termux/files/home/shoppinglist/app/src/main/res/layout/dialog_edit_item.xml:14: Warning: Missing autofillHints attribute [Autofill]
-        <EditText
-         ~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/src/main/res/layout/dialog_edit_item.xml:28: Warning: Missing autofillHints attribute [Autofill]
-        <EditText
-         ~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/dialog_edit_item.xml:25: Warning: Missing autofillHints attribute [Autofill]
+            <EditText
+             ~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/dialog_edit_item.xml:41: Warning: Missing autofillHints attribute [Autofill]
+            <EditText
+             ~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/dialog_price_input.xml:33: Warning: Missing autofillHints attribute [Autofill]
+            <EditText
+             ~~~~~~~~
 
    Explanation for issues of type "Autofill":
    Specify an autofillHints attribute when targeting SDK version 26 or higher
@@ -140,12 +332,61 @@
 
    https://developer.android.com/guide/topics/text/autofill.html
 
-/data/data/com.termux/files/home/shoppinglist/app/src/main/java/com/example/shoppinglist/ShoppingItemAdapter.kt:70: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
+/home/adam/apps/android-shoppinglist/app/src/main/java/com/wbpxre150/shoppinglist/ShoppingListAdapter.kt:73: Warning: onTouch lambda should call View#performClick when a click is detected [ClickableViewAccessibility]
+            itemView.setOnTouchListener { _, event ->
+                                        ^
+
+   Explanation for issues of type "ClickableViewAccessibility":
+   If a View that overrides onTouchEvent or uses an OnTouchListener does not
+   also implement performClick and call it when clicks are detected, the View
+   may not handle accessibility actions properly. Logic handling the click
+   actions should ideally be placed in View#performClick as some accessibility
+   services invoke performClick when a click action should occur.
+
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_main.xml:50: Warning: Missing contentDescription attribute on image [ContentDescription]
+        <ImageView
+         ~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_new_shopping_list.xml:43: Warning: Missing contentDescription attribute on image [ContentDescription]
+            <ImageView
+             ~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_shopping_list_detail.xml:40: Warning: Missing contentDescription attribute on image [ContentDescription]
+        <ImageView
+         ~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/item_shopping_list.xml:24: Warning: Missing contentDescription attribute on image [ContentDescription]
+        <ImageView
+         ~~~~~~~~~
+
+   Explanation for issues of type "ContentDescription":
+   Non-textual widgets like ImageViews and ImageButtons should use the
+   contentDescription attribute to specify a textual description of the widget
+   such that screen readers and other accessibility tools can adequately
+   describe the user interface.
+
+   Note that elements in application screens that are purely decorative and do
+   not provide any content or enable a user action should not have
+   accessibility content descriptions. In this case, set their descriptions to
+   @null. If your app's minSdkVersion is 16 or higher, you can instead set
+   these graphical elements' android:importantForAccessibility attributes to
+   no.
+
+   Note that for text fields, you should not set both the hint and the
+   contentDescription attributes since the hint will never be shown. Just set
+   the hint.
+
+   https://developer.android.com/guide/topics/ui/accessibility/apps#special-cases
+
+/home/adam/apps/android-shoppinglist/app/src/main/java/com/wbpxre150/shoppinglist/ShoppingItemAdapter.kt:76: Warning: Do not concatenate text displayed with setText. Use resource string with placeholders. [SetTextI18n]
             itemQuantityView.text = "Quantity: ${shoppingItem.quantity}"
                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/data/data/com.termux/files/home/shoppinglist/app/src/main/java/com/example/shoppinglist/ShoppingItemAdapter.kt:70: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+/home/adam/apps/android-shoppinglist/app/src/main/java/com/wbpxre150/shoppinglist/ShoppingItemAdapter.kt:76: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
             itemQuantityView.text = "Quantity: ${shoppingItem.quantity}"
                                      ~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/java/com/wbpxre150/shoppinglist/ShoppingListDetailActivity.kt:335: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            binding.textViewAddItemTitle.text = "Add New Item"
+                                                 ~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/java/com/wbpxre150/shoppinglist/ShoppingListDetailActivity.kt:356: Warning: String literal in setText can not be translated. Use Android resources instead. [SetTextI18n]
+            binding.textViewAddItemTitle.text = "Add New Item"
+                                                 ~~~~~~~~~~~~
 
    Explanation for issues of type "SetTextI18n":
    When calling TextView#setText
@@ -160,4 +401,52 @@
 
    https://developer.android.com/guide/topics/resources/localization.html
 
-0 errors, 26 warnings
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/actionbar_total_price.xml:10: Warning: Hardcoded string "$0.00", should use @string resource [HardcodedText]
+    android:text="$0.00"
+    ~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_main.xml:71: Warning: Hardcoded string "Tap the + button to create your first shopping list", should use @string resource [HardcodedText]
+            android:text="Tap the + button to create your first shopping list"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_new_shopping_list.xml:59: Warning: Hardcoded string "New Shopping List", should use @string resource [HardcodedText]
+                android:text="New Shopping List"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_new_shopping_list.xml:68: Warning: Hardcoded string "Give your list a memorable name", should use @string resource [HardcodedText]
+                android:text="Give your list a memorable name"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_shopping_list_detail.xml:61: Warning: Hardcoded string "Add items below to start building your list", should use @string resource [HardcodedText]
+            android:text="Add items below to start building your list"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_shopping_list_detail.xml:106: Warning: Hardcoded string "Add New Item", should use @string resource [HardcodedText]
+                    android:text="Add New Item"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_shopping_list_detail.xml:115: Warning: Hardcoded string "Minimize add item", should use @string resource [HardcodedText]
+                    android:contentDescription="Minimize add item"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/activity_shopping_list_detail.xml:179: Warning: Hardcoded string "1", should use @string resource [HardcodedText]
+                            android:text="1"
+                            ~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/dialog_edit_list.xml:23: Warning: Hardcoded string "Rename Shopping List", should use @string resource [HardcodedText]
+            android:text="Rename Shopping List"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/dialog_edit_list.xml:32: Warning: Hardcoded string "List Name", should use @string resource [HardcodedText]
+            android:hint="List Name"
+            ~~~~~~~~~~~~~~~~~~~~~~~~
+/home/adam/apps/android-shoppinglist/app/src/main/res/layout/item_shopping_item.xml:135: Warning: Hardcoded string "Set price", should use @string resource [HardcodedText]
+                android:contentDescription="Set price"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "HardcodedText":
+   Hardcoding text attributes directly in layout files is bad for several
+   reasons:
+
+   * When creating configuration variations (for example for landscape or
+   portrait) you have to repeat the actual text (and keep it up to date when
+   making changes)
+
+   * The application cannot be translated to other languages by just adding
+   new translations for existing string resources.
+
+   There are quickfixes to automatically extract this hardcoded string into a
+   resource lookup.
+
+0 errors, 82 warnings

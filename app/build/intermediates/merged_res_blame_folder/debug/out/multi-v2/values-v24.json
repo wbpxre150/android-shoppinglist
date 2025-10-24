@@ -1,10 +1,20 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.shoppinglist.app-mergeDebugResources-37:/values-v24/values-v24.xml",
+            "outputFile": "com.wbpxre150.shoppinglist.app-mergeDebugResources-37:/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "/data/data/com.termux/files/home/.gradle/caches/transforms-3/70ef56eb405ad65be213c1e1f2380211/transformed/material-1.10.0/res/values-v24/values-v24.xml",
+                    "source": "/home/adam/.gradle/caches/transforms-3/1334f1d5f4551f52f81357415aaef979/transformed/appcompat-1.6.1/res/values-v24/values-v24.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,212",
+                        "endColumns": "156,134",
+                        "endOffsets": "207,342"
+                    }
+                },
+                {
+                    "source": "/home/adam/.gradle/caches/transforms-3/51c7a82f518e2566170762c1c0a782b8/transformed/material-1.11.0/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,9,12,15",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -20,16 +30,6 @@
                         "endLines": "4,5,6,7,10,13,16,19",
                         "endColumns": "84,98,86,100,10,10,10,10",
                         "endOffsets": "427,526,613,714,913,1126,1327,1542"
-                    }
-                },
-                {
-                    "source": "/data/data/com.termux/files/home/.gradle/caches/transforms-3/6fde273147cdcb92ee0f1fcf45a54be9/transformed/appcompat-1.6.1/res/values-v24/values-v24.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,212",
-                        "endColumns": "156,134",
-                        "endOffsets": "207,342"
                     }
                 }
             ]

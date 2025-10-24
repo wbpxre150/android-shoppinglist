@@ -20,4 +20,19 @@
     <string name="hint_edit_item_quantity">Quantity</string>
     <string name="item_updated">Item updated</string>
     <string name="item_name_empty">Item name cannot be empty</string>
+    <string name="share_list">Share List</string>
+    <string name="export_error">Failed to export list</string>
+    <string name="import_error">Failed to import list</string>
+    <string name="import_success">List imported successfully</string>
+    <string name="importing_list">Importing shopping list…</string>
+    <string name="share_subject">Shopping List: %s</string>
+    <string name="share_message">Here\'s my shopping list: %s</string>
+    <string name="enter_price">Enter Price</string>
+    <string name="hint_price">Price</string>
+    <string name="set_reminder_title">Set Reminder</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
+    <string name="set_reminder">Set Reminder</string>
+    <string name="reminder_past_error">Cannot set reminder in the past</string>
+    <string name="reminder_set">Reminder set successfully</string>
 </resources>

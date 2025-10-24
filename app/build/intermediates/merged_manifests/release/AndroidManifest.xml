@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.shoppinglist"
+    package="com.wbpxre150.shoppinglist"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -8,14 +8,20 @@
         android:minSdkVersion="24"
         android:targetSdkVersion="34" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <permission
-        android:name="com.example.shoppinglist.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.wbpxre150.shoppinglist.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.shoppinglist.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="com.wbpxre150.shoppinglist.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
-        android:name="com.example.shoppinglist.ShoppingApplication"
+        android:name="com.wbpxre150.shoppinglist.ShoppingApplication"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:extractNativeLibs="false"
@@ -24,7 +30,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppingList" >
         <activity
-            android:name="com.example.shoppinglist.MainActivity"
+            android:name="com.wbpxre150.shoppinglist.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,27 +39,92 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.shoppinglist.NewShoppingListActivity"
+            android:name="com.wbpxre150.shoppinglist.NewShoppingListActivity"
             android:exported="false"
-            android:parentActivityName="com.example.shoppinglist.MainActivity"
+            android:parentActivityName="com.wbpxre150.shoppinglist.MainActivity"
             android:windowSoftInputMode="stateVisible" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name="com.example.shoppinglist.ShoppingListDetailActivity"
+            android:name="com.wbpxre150.shoppinglist.ShoppingListDetailActivity"
             android:exported="false"
-            android:parentActivityName="com.example.shoppinglist.MainActivity"
+            android:parentActivityName="com.wbpxre150.shoppinglist.MainActivity"
             android:windowSoftInputMode="adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name="com.wbpxre150.shoppinglist.ImportListActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.ShoppingList" >
+
+            <!-- Intent filter for opening .shoppinglist files by MIME type (preferred) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:mimeType="application/x-shoppinglist" />
+            </intent-filter>
+            <!-- Intent filter for opening .shoppinglist files by extension (fallback) -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="file" />
+                <data android:scheme="content" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.shoppinglist" />
+                <data android:pathPattern=".*\\..*\\.shoppinglist" />
+                <data android:pathPattern=".*\\..*\\..*\\.shoppinglist" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.shoppinglist" />
+            </intent-filter>
+            <!-- Intent filter for receiving .shoppinglist files via share sheet -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/x-shoppinglist" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.wbpxre150.shoppinglist.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_MIME_TYPES"
+                android:resource="@xml/mime_types" />
+        </provider>
+
+        <receiver
+            android:name="com.wbpxre150.shoppinglist.notifications.NotificationReceiver"
+            android:exported="false" />
+        <receiver
+            android:name="com.wbpxre150.shoppinglist.notifications.BootReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.example.shoppinglist.androidx-startup"
+            android:authorities="com.wbpxre150.shoppinglist.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"

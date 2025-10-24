@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.shoppinglist.app-mergeDebugResources-37:/values-h480dp-land-v13/values-h480dp-land-v13.xml",
+            "outputFile": "com.wbpxre150.shoppinglist.app-mergeDebugResources-37:/values-h480dp-land-v13/values-h480dp-land-v13.xml",
             "map": [
                 {
-                    "source": "/data/data/com.termux/files/home/.gradle/caches/transforms-3/70ef56eb405ad65be213c1e1f2380211/transformed/material-1.10.0/res/values-h480dp-land-v13/values-h480dp-land-v13.xml",
+                    "source": "/home/adam/.gradle/caches/transforms-3/51c7a82f518e2566170762c1c0a782b8/transformed/material-1.11.0/res/values-h480dp-land-v13/values-h480dp-land-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

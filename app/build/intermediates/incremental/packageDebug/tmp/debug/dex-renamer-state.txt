@@ -1,13 +1,19 @@
-#Mon Jul 21 16:16:56 GMT 2025
-path.3=6/classes.dex
-path.2=13/classes.dex
-path.1=0/classes.dex
+#Fri Oct 24 16:12:00 AWST 2025
+base.0=/home/adam/apps/android-shoppinglist/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
+base.1=/home/adam/apps/android-shoppinglist/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
+base.2=/home/adam/apps/android-shoppinglist/app/build/intermediates/dex/debug/mergeProjectDexDebug/11/classes.dex
+base.3=/home/adam/apps/android-shoppinglist/app/build/intermediates/dex/debug/mergeProjectDexDebug/12/classes.dex
+base.4=/home/adam/apps/android-shoppinglist/app/build/intermediates/dex/debug/mergeProjectDexDebug/3/classes.dex
+base.5=/home/adam/apps/android-shoppinglist/app/build/intermediates/dex/debug/mergeProjectDexDebug/6/classes.dex
 path.0=classes.dex
-base.3=/data/data/com.termux/files/home/shoppinglist/app/build/intermediates/dex/debug/mergeProjectDexDebug/6/classes.dex
-base.2=/data/data/com.termux/files/home/shoppinglist/app/build/intermediates/dex/debug/mergeProjectDexDebug/13/classes.dex
-base.1=/data/data/com.termux/files/home/shoppinglist/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.0=/data/data/com.termux/files/home/shoppinglist/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
-renamed.3=classes4.dex
-renamed.2=classes3.dex
-renamed.1=classes2.dex
+path.1=0/classes.dex
+path.2=11/classes.dex
+path.3=12/classes.dex
+path.4=3/classes.dex
+path.5=6/classes.dex
 renamed.0=classes.dex
+renamed.1=classes2.dex
+renamed.2=classes3.dex
+renamed.3=classes4.dex
+renamed.4=classes5.dex
+renamed.5=classes6.dex

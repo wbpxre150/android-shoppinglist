@@ -1,6 +1,6 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.example.shoppinglist"
+3    package="com.wbpxre150.shoppinglist"
 4    android:versionCode="1"
 5    android:versionName="1.0" >
 6
@@ -8,159 +8,307 @@
 8        android:minSdkVersion="24"
 9        android:targetSdkVersion="34" />
 10
-11    <permission
-11-->[androidx.core:core:1.12.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/a00fbc8a76265a9fb558d8c7e8712746/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
-12        android:name="com.example.shoppinglist.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-12-->[androidx.core:core:1.12.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/a00fbc8a76265a9fb558d8c7e8712746/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
-13        android:protectionLevel="signature" />
-13-->[androidx.core:core:1.12.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/a00fbc8a76265a9fb558d8c7e8712746/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
-14
-15    <uses-permission android:name="com.example.shoppinglist.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-15-->[androidx.core:core:1.12.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/a00fbc8a76265a9fb558d8c7e8712746/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
-15-->[androidx.core:core:1.12.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/a00fbc8a76265a9fb558d8c7e8712746/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+11    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+11-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:5:5-77
+11-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:5:22-74
+12    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+12-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:6:5-79
+12-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:6:22-76
+13    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+13-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:7:5-74
+13-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:7:22-71
+14    <uses-permission android:name="android.permission.WAKE_LOCK" />
+14-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:8:5-68
+14-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:8:22-65
+15    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+15-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:9:5-81
+15-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:9:22-78
 16
-17    <application
-17-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:5:5-37:19
-18        android:name="com.example.shoppinglist.ShoppingApplication"
-18-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:6:9-44
-19        android:allowBackup="true"
-19-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:7:9-35
-20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-20-->[androidx.core:core:1.12.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/a00fbc8a76265a9fb558d8c7e8712746/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
-21        android:debuggable="true"
-22        android:extractNativeLibs="false"
-23        android:icon="@android:drawable/ic_menu_agenda"
-23-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:8:9-56
-24        android:label="@string/app_name"
-24-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:9:9-41
-25        android:supportsRtl="true"
-25-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:10:9-35
-26        android:theme="@style/Theme.ShoppingList" >
-26-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:11:9-50
-27        <activity
-27-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:12:9-19:20
-28            android:name="com.example.shoppinglist.MainActivity"
-28-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:13:13-41
-29            android:exported="true" >
-29-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:14:13-36
-30            <intent-filter>
-30-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:15:13-18:29
-31                <action android:name="android.intent.action.MAIN" />
-31-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:16:17-69
-31-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:16:25-66
-32
-33                <category android:name="android.intent.category.LAUNCHER" />
-33-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:17:17-77
-33-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:17:27-74
-34            </intent-filter>
-35        </activity>
-36        <activity
-36-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:20:9-27:20
-37            android:name="com.example.shoppinglist.NewShoppingListActivity"
-37-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:21:13-52
-38            android:exported="false"
-38-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:22:13-37
-39            android:parentActivityName="com.example.shoppinglist.MainActivity" >
-39-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:23:13-55
-40            <meta-data
-40-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:24:13-26:49
-41                android:name="android.support.PARENT_ACTIVITY"
-41-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:25:17-63
-42                android:value=".MainActivity" />
-42-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:26:17-46
-43        </activity>
-44        <activity
-44-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:28:9-36:20
-45            android:name="com.example.shoppinglist.ShoppingListDetailActivity"
-45-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:29:13-55
-46            android:exported="false"
-46-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:30:13-37
-47            android:parentActivityName="com.example.shoppinglist.MainActivity"
-47-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:31:13-55
-48            android:windowSoftInputMode="adjustResize" >
-48-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:32:13-55
-49            <meta-data
-49-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:24:13-26:49
-50                android:name="android.support.PARENT_ACTIVITY"
-50-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:25:17-63
-51                android:value=".MainActivity" />
-51-->/data/data/com.termux/files/home/shoppinglist/app/src/main/AndroidManifest.xml:26:17-46
-52        </activity>
-53
-54        <provider
-54-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/340219bcf4343482c65c347ca017a90a/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
-55            android:name="androidx.startup.InitializationProvider"
-55-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/340219bcf4343482c65c347ca017a90a/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
-56            android:authorities="com.example.shoppinglist.androidx-startup"
-56-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/340219bcf4343482c65c347ca017a90a/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
-57            android:exported="false" >
-57-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/340219bcf4343482c65c347ca017a90a/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
-58            <meta-data
-58-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/340219bcf4343482c65c347ca017a90a/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
-59                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-59-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/340219bcf4343482c65c347ca017a90a/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
-60                android:value="androidx.startup" />
-60-->[androidx.emoji2:emoji2:1.2.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/340219bcf4343482c65c347ca017a90a/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
-61            <meta-data
-61-->[androidx.lifecycle:lifecycle-process:2.6.2] /data/data/com.termux/files/home/.gradle/caches/transforms-3/867d8b7a1629f3c04c36ed26f2a1747c/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:29:13-31:52
-62                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-62-->[androidx.lifecycle:lifecycle-process:2.6.2] /data/data/com.termux/files/home/.gradle/caches/transforms-3/867d8b7a1629f3c04c36ed26f2a1747c/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:30:17-78
-63                android:value="androidx.startup" />
-63-->[androidx.lifecycle:lifecycle-process:2.6.2] /data/data/com.termux/files/home/.gradle/caches/transforms-3/867d8b7a1629f3c04c36ed26f2a1747c/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:31:17-49
-64            <meta-data
-64-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
-65                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-65-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
-66                android:value="androidx.startup" />
-66-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
-67        </provider>
-68
-69        <service
-69-->[androidx.room:room-runtime:2.6.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/fa4d108a91b4e67a9f0554e49cf56bfa/transformed/room-runtime-2.6.0/AndroidManifest.xml:24:9-28:63
-70            android:name="androidx.room.MultiInstanceInvalidationService"
-70-->[androidx.room:room-runtime:2.6.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/fa4d108a91b4e67a9f0554e49cf56bfa/transformed/room-runtime-2.6.0/AndroidManifest.xml:25:13-74
-71            android:directBootAware="true"
-71-->[androidx.room:room-runtime:2.6.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/fa4d108a91b4e67a9f0554e49cf56bfa/transformed/room-runtime-2.6.0/AndroidManifest.xml:26:13-43
-72            android:exported="false" />
-72-->[androidx.room:room-runtime:2.6.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/fa4d108a91b4e67a9f0554e49cf56bfa/transformed/room-runtime-2.6.0/AndroidManifest.xml:27:13-37
-73
-74        <receiver
-74-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
-75            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-75-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
-76            android:directBootAware="false"
-76-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
-77            android:enabled="true"
-77-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
-78            android:exported="true"
-78-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
-79            android:permission="android.permission.DUMP" >
-79-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
-80            <intent-filter>
-80-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
-81                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-81-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
-81-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
-82            </intent-filter>
-83            <intent-filter>
-83-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
-84                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-84-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
-84-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
-85            </intent-filter>
-86            <intent-filter>
-86-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
-87                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-87-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
-87-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
-88            </intent-filter>
-89            <intent-filter>
-89-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
-90                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-90-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
-90-->[androidx.profileinstaller:profileinstaller:1.3.0] /data/data/com.termux/files/home/.gradle/caches/transforms-3/cf044e6e0a20ef85b858d08530608ef5/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+17    <permission
+17-->[androidx.core:core:1.12.0] /home/adam/.gradle/caches/transforms-3/1c8382df8be7673e6c577948088f675a/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+18        android:name="com.wbpxre150.shoppinglist.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+18-->[androidx.core:core:1.12.0] /home/adam/.gradle/caches/transforms-3/1c8382df8be7673e6c577948088f675a/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+19        android:protectionLevel="signature" />
+19-->[androidx.core:core:1.12.0] /home/adam/.gradle/caches/transforms-3/1c8382df8be7673e6c577948088f675a/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+20
+21    <uses-permission android:name="com.wbpxre150.shoppinglist.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+21-->[androidx.core:core:1.12.0] /home/adam/.gradle/caches/transforms-3/1c8382df8be7673e6c577948088f675a/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+21-->[androidx.core:core:1.12.0] /home/adam/.gradle/caches/transforms-3/1c8382df8be7673e6c577948088f675a/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+22
+23    <application
+23-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:11:5-101:19
+24        android:name="com.wbpxre150.shoppinglist.ShoppingApplication"
+24-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:12:9-44
+25        android:allowBackup="true"
+25-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:13:9-35
+26        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+26-->[androidx.core:core:1.12.0] /home/adam/.gradle/caches/transforms-3/1c8382df8be7673e6c577948088f675a/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+27        android:debuggable="true"
+28        android:extractNativeLibs="false"
+29        android:icon="@android:drawable/ic_menu_agenda"
+29-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:14:9-56
+30        android:label="@string/app_name"
+30-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:15:9-41
+31        android:supportsRtl="true"
+31-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:16:9-35
+32        android:theme="@style/Theme.ShoppingList" >
+32-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:17:9-50
+33        <activity
+33-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:18:9-25:20
+34            android:name="com.wbpxre150.shoppinglist.MainActivity"
+34-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:19:13-41
+35            android:exported="true" >
+35-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:20:13-36
+36            <intent-filter>
+36-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:21:13-24:29
+37                <action android:name="android.intent.action.MAIN" />
+37-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:22:17-69
+37-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:22:25-66
+38
+39                <category android:name="android.intent.category.LAUNCHER" />
+39-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:23:17-77
+39-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:23:27-74
+40            </intent-filter>
+41        </activity>
+42        <activity
+42-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:26:9-34:20
+43            android:name="com.wbpxre150.shoppinglist.NewShoppingListActivity"
+43-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:27:13-52
+44            android:exported="false"
+44-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:28:13-37
+45            android:parentActivityName="com.wbpxre150.shoppinglist.MainActivity"
+45-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:29:13-55
+46            android:windowSoftInputMode="stateVisible" >
+46-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:30:13-55
+47            <meta-data
+47-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:31:13-33:49
+48                android:name="android.support.PARENT_ACTIVITY"
+48-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:32:17-63
+49                android:value=".MainActivity" />
+49-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:33:17-46
+50        </activity>
+51        <activity
+51-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:35:9-43:20
+52            android:name="com.wbpxre150.shoppinglist.ShoppingListDetailActivity"
+52-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:36:13-55
+53            android:exported="false"
+53-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:37:13-37
+54            android:parentActivityName="com.wbpxre150.shoppinglist.MainActivity"
+54-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:38:13-55
+55            android:windowSoftInputMode="adjustResize" >
+55-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:39:13-55
+56            <meta-data
+56-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:31:13-33:49
+57                android:name="android.support.PARENT_ACTIVITY"
+57-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:32:17-63
+58                android:value=".MainActivity" />
+58-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:33:17-46
+59        </activity>
+60        <activity
+60-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:44:9-77:20
+61            android:name="com.wbpxre150.shoppinglist.ImportListActivity"
+61-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:45:13-47
+62            android:exported="true"
+62-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:46:13-36
+63            android:launchMode="singleTop"
+63-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:47:13-43
+64            android:theme="@style/Theme.ShoppingList" >
+64-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:48:13-54
+65
+66            <!-- Intent filter for opening .shoppinglist files by MIME type (preferred) -->
+67            <intent-filter>
+67-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:50:13-57:29
+68                <action android:name="android.intent.action.VIEW" />
+68-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:51:17-69
+68-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:51:25-66
+69
+70                <category android:name="android.intent.category.DEFAULT" />
+70-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:52:17-76
+70-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:52:27-73
+71                <category android:name="android.intent.category.BROWSABLE" />
+71-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:53:17-78
+71-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:53:27-75
+72
+73                <data android:scheme="file" />
+73-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:17-47
+73-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:23-44
+74                <data android:scheme="content" />
+74-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:17-47
+74-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:23-44
+75                <data android:mimeType="application/x-shoppinglist" />
+75-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:17-47
+75-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:56:23-68
+76            </intent-filter>
+77            <!-- Intent filter for opening .shoppinglist files by extension (fallback) -->
+78            <intent-filter>
+78-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:59:13-70:29
+79                <action android:name="android.intent.action.VIEW" />
+79-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:51:17-69
+79-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:51:25-66
+80
+81                <category android:name="android.intent.category.DEFAULT" />
+81-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:52:17-76
+81-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:52:27-73
+82                <category android:name="android.intent.category.BROWSABLE" />
+82-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:53:17-78
+82-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:53:27-75
+83
+84                <data android:scheme="file" />
+84-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:17-47
+84-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:23-44
+85                <data android:scheme="content" />
+85-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:17-47
+85-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:23-44
+86                <data android:host="*" />
+86-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:17-47
+86-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:65:23-39
+87                <data android:pathPattern=".*\\.shoppinglist" />
+87-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:17-47
+87-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:66:23-62
+88                <data android:pathPattern=".*\\..*\\.shoppinglist" />
+88-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:17-47
+88-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:66:23-62
+89                <data android:pathPattern=".*\\..*\\..*\\.shoppinglist" />
+89-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:17-47
+89-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:66:23-62
+90                <data android:pathPattern=".*\\..*\\..*\\..*\\.shoppinglist" />
+90-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:17-47
+90-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:66:23-62
 91            </intent-filter>
-92        </receiver>
-93    </application>
-94
-95</manifest>
+92            <!-- Intent filter for receiving .shoppinglist files via share sheet -->
+93            <intent-filter>
+93-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:72:13-76:29
+94                <action android:name="android.intent.action.SEND" />
+94-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:73:17-69
+94-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:73:25-66
+95
+96                <category android:name="android.intent.category.DEFAULT" />
+96-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:52:17-76
+96-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:52:27-73
+97
+98                <data android:mimeType="application/x-shoppinglist" />
+98-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:54:17-47
+98-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:56:23-68
+99            </intent-filter>
+100        </activity>
+101
+102        <provider
+103            android:name="androidx.core.content.FileProvider"
+103-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:80:13-62
+104            android:authorities="com.wbpxre150.shoppinglist.fileprovider"
+104-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:81:13-64
+105            android:exported="false"
+105-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:82:13-37
+106            android:grantUriPermissions="true" >
+106-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:83:13-47
+107            <meta-data
+107-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:84:13-86:54
+108                android:name="android.support.FILE_PROVIDER_PATHS"
+108-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:85:17-67
+109                android:resource="@xml/file_paths" />
+109-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:86:17-51
+110            <meta-data
+110-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:87:13-89:54
+111                android:name="android.support.FILE_PROVIDER_MIME_TYPES"
+111-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:88:17-72
+112                android:resource="@xml/mime_types" />
+112-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:89:17-51
+113        </provider>
+114
+115        <receiver
+115-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:92:9-93:40
+116            android:name="com.wbpxre150.shoppinglist.notifications.NotificationReceiver"
+116-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:92:19-69
+117            android:exported="false" />
+117-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:93:13-37
+118        <receiver
+118-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:95:9-100:20
+119            android:name="com.wbpxre150.shoppinglist.notifications.BootReceiver"
+119-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:95:19-61
+120            android:exported="true" >
+120-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:96:13-36
+121            <intent-filter>
+121-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:97:13-99:29
+122                <action android:name="android.intent.action.BOOT_COMPLETED" />
+122-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:98:17-79
+122-->/home/adam/apps/android-shoppinglist/app/src/main/AndroidManifest.xml:98:25-76
+123            </intent-filter>
+124        </receiver>
+125
+126        <provider
+126-->[androidx.emoji2:emoji2:1.2.0] /home/adam/.gradle/caches/transforms-3/5fd59c5fafa6f12a16263abdd084e43c/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+127            android:name="androidx.startup.InitializationProvider"
+127-->[androidx.emoji2:emoji2:1.2.0] /home/adam/.gradle/caches/transforms-3/5fd59c5fafa6f12a16263abdd084e43c/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
+128            android:authorities="com.wbpxre150.shoppinglist.androidx-startup"
+128-->[androidx.emoji2:emoji2:1.2.0] /home/adam/.gradle/caches/transforms-3/5fd59c5fafa6f12a16263abdd084e43c/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
+129            android:exported="false" >
+129-->[androidx.emoji2:emoji2:1.2.0] /home/adam/.gradle/caches/transforms-3/5fd59c5fafa6f12a16263abdd084e43c/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
+130            <meta-data
+130-->[androidx.emoji2:emoji2:1.2.0] /home/adam/.gradle/caches/transforms-3/5fd59c5fafa6f12a16263abdd084e43c/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+131                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+131-->[androidx.emoji2:emoji2:1.2.0] /home/adam/.gradle/caches/transforms-3/5fd59c5fafa6f12a16263abdd084e43c/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+132                android:value="androidx.startup" />
+132-->[androidx.emoji2:emoji2:1.2.0] /home/adam/.gradle/caches/transforms-3/5fd59c5fafa6f12a16263abdd084e43c/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+133            <meta-data
+133-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/adam/.gradle/caches/transforms-3/db4ee541f378d256f3a89caff5485b45/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:29:13-31:52
+134                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+134-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/adam/.gradle/caches/transforms-3/db4ee541f378d256f3a89caff5485b45/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:30:17-78
+135                android:value="androidx.startup" />
+135-->[androidx.lifecycle:lifecycle-process:2.6.2] /home/adam/.gradle/caches/transforms-3/db4ee541f378d256f3a89caff5485b45/transformed/lifecycle-process-2.6.2/AndroidManifest.xml:31:17-49
+136            <meta-data
+136-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+137                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+137-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+138                android:value="androidx.startup" />
+138-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+139        </provider>
+140
+141        <service
+141-->[androidx.room:room-runtime:2.6.0] /home/adam/.gradle/caches/transforms-3/ee71631c82968ae5370afab4a1fbd537/transformed/room-runtime-2.6.0/AndroidManifest.xml:24:9-28:63
+142            android:name="androidx.room.MultiInstanceInvalidationService"
+142-->[androidx.room:room-runtime:2.6.0] /home/adam/.gradle/caches/transforms-3/ee71631c82968ae5370afab4a1fbd537/transformed/room-runtime-2.6.0/AndroidManifest.xml:25:13-74
+143            android:directBootAware="true"
+143-->[androidx.room:room-runtime:2.6.0] /home/adam/.gradle/caches/transforms-3/ee71631c82968ae5370afab4a1fbd537/transformed/room-runtime-2.6.0/AndroidManifest.xml:26:13-43
+144            android:exported="false" />
+144-->[androidx.room:room-runtime:2.6.0] /home/adam/.gradle/caches/transforms-3/ee71631c82968ae5370afab4a1fbd537/transformed/room-runtime-2.6.0/AndroidManifest.xml:27:13-37
+145
+146        <receiver
+146-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+147            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+147-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+148            android:directBootAware="false"
+148-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+149            android:enabled="true"
+149-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+150            android:exported="true"
+150-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+151            android:permission="android.permission.DUMP" >
+151-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+152            <intent-filter>
+152-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+153                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+153-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+153-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+154            </intent-filter>
+155            <intent-filter>
+155-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+156                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+156-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+156-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+157            </intent-filter>
+158            <intent-filter>
+158-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+159                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+159-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+159-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+160            </intent-filter>
+161            <intent-filter>
+161-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+162                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+162-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+162-->[androidx.profileinstaller:profileinstaller:1.3.0] /home/adam/.gradle/caches/transforms-3/da9274dddd66238c826531ea1cf08824/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+163            </intent-filter>
+164        </receiver>
+165    </application>
+166
+167</manifest>
