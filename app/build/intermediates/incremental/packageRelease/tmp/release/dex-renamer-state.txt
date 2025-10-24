@@ -1,4 +1,0 @@
-#Fri Oct 24 16:12:10 AWST 2025
-base.0=/home/adam/apps/android-shoppinglist/app/build/intermediates/dex/release/mergeDexRelease/classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
