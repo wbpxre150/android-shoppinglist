@@ -635,43 +635,37 @@ class ShoppingListDetailActivity : AppCompatActivity() {
     }
 
     private fun showDeleteConfirmationDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_delete_confirmation, null)
+        val buttonCancel = dialogView.findViewById<Button>(R.id.buttonCancel)
+        val buttonDelete = dialogView.findViewById<Button>(R.id.buttonDelete)
+
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Delete Shopping List")
-            .setMessage("Are you sure you want to delete this shopping list and all its items?")
-            .setPositiveButton("Delete") { _, _ ->
-                // Get the full ShoppingList object before deleting using one-time observation
-                val shoppingListLiveData = shoppingViewModel.getShoppingListById(listId)
-                val observer = object : androidx.lifecycle.Observer<ShoppingList?> {
-                    override fun onChanged(value: ShoppingList?) {
-                        if (value != null) {
-                            // Remove observer immediately to prevent memory leaks
-                            shoppingListLiveData.removeObserver(this)
-                            shoppingViewModel.delete(value)
-                            finish()
-                        }
-                    }
-                }
-                shoppingListLiveData.observe(this, observer)
-            }
-            .setNegativeButton("Cancel", null)
+            .setView(dialogView)
             .create()
 
-        dialog.setOnShowListener {
-            // Customize buttons with icons
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
-                text = ""
-                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_confirm, 0, 0, 0)
-                compoundDrawablePadding = 0
-                contentDescription = "Delete"
-                setTextColor(getColor(R.color.dialog_confirm_green))
+        // Set transparent background for MaterialCardView styling
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // Set up button listeners
+        buttonCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        buttonDelete.setOnClickListener {
+            // Get the full ShoppingList object before deleting using one-time observation
+            val shoppingListLiveData = shoppingViewModel.getShoppingListById(listId)
+            val observer = object : androidx.lifecycle.Observer<ShoppingList?> {
+                override fun onChanged(value: ShoppingList?) {
+                    if (value != null) {
+                        // Remove observer immediately to prevent memory leaks
+                        shoppingListLiveData.removeObserver(this)
+                        shoppingViewModel.delete(value)
+                        finish()
+                    }
+                }
             }
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
-                text = ""
-                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cancel, 0, 0, 0)
-                compoundDrawablePadding = 0
-                contentDescription = "Cancel"
-                setTextColor(getColor(R.color.dialog_cancel_red))
-            }
+            shoppingListLiveData.observe(this, observer)
+            dialog.dismiss()
         }
 
         dialog.show()
@@ -710,71 +704,59 @@ class ShoppingListDetailActivity : AppCompatActivity() {
     }
 
     private fun showPermissionExplanationDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_permission_notification, null)
+        val buttonCancel = dialogView.findViewById<Button>(R.id.buttonCancel)
+        val buttonGrantPermission = dialogView.findViewById<Button>(R.id.buttonGrantPermission)
+
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Notification Permission Required")
-            .setMessage("This app needs notification permission to remind you about your shopping items. Please grant the permission to enable reminders.")
-            .setPositiveButton("Grant Permission") { _, _ ->
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                    REQUEST_NOTIFICATION_PERMISSION
-                )
-            }
-            .setNegativeButton("Cancel", null)
+            .setView(dialogView)
             .create()
 
-        dialog.setOnShowListener {
-            // Customize buttons with icons
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
-                text = ""
-                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_confirm, 0, 0, 0)
-                compoundDrawablePadding = 0
-                contentDescription = "Grant Permission"
-                setTextColor(getColor(R.color.dialog_confirm_green))
-            }
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
-                text = ""
-                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cancel, 0, 0, 0)
-                compoundDrawablePadding = 0
-                contentDescription = "Cancel"
-                setTextColor(getColor(R.color.dialog_cancel_red))
-            }
+        // Set transparent background for MaterialCardView styling
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // Set up button listeners
+        buttonCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        buttonGrantPermission.setOnClickListener {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                REQUEST_NOTIFICATION_PERMISSION
+            )
+            dialog.dismiss()
         }
 
         dialog.show()
     }
 
     private fun showExactAlarmPermissionDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_permission_alarm, null)
+        val buttonCancel = dialogView.findViewById<Button>(R.id.buttonCancel)
+        val buttonOpenSettings = dialogView.findViewById<Button>(R.id.buttonOpenSettings)
+
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Exact Alarm Permission Required")
-            .setMessage("This app needs permission to schedule exact alarms for precise reminders. Please enable this in Settings.")
-            .setPositiveButton("Open Settings") { _, _ ->
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                        data = Uri.parse("package:$packageName")
-                    }
-                    startActivity(intent)
-                }
-            }
-            .setNegativeButton("Cancel", null)
+            .setView(dialogView)
             .create()
 
-        dialog.setOnShowListener {
-            // Customize buttons with icons
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.apply {
-                text = ""
-                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_confirm, 0, 0, 0)
-                compoundDrawablePadding = 0
-                contentDescription = "Open Settings"
-                setTextColor(getColor(R.color.dialog_confirm_green))
+        // Set transparent background for MaterialCardView styling
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // Set up button listeners
+        buttonCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        buttonOpenSettings.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                    data = Uri.parse("package:$packageName")
+                }
+                startActivity(intent)
             }
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.apply {
-                text = ""
-                setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cancel, 0, 0, 0)
-                compoundDrawablePadding = 0
-                contentDescription = "Cancel"
-                setTextColor(getColor(R.color.dialog_cancel_red))
-            }
+            dialog.dismiss()
         }
 
         dialog.show()
