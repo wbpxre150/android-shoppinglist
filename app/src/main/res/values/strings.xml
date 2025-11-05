@@ -35,4 +35,10 @@
     <string name="set_reminder">Set Reminder</string>
     <string name="reminder_past_error">Cannot set reminder in the past</string>
     <string name="reminder_set">Reminder set successfully</string>
+    <string name="delete_shopping_list">Delete Shopping List</string>
+    <string name="delete_confirmation_message">Are you sure you want to delete this shopping list and all its items?</string>
+    <string name="notification_permission_title">Notification Permission Required</string>
+    <string name="notification_permission_message">This app needs notification permission to remind you about your shopping items. Please grant the permission to enable reminders.</string>
+    <string name="exact_alarm_permission_title">Exact Alarm Permission Required</string>
+    <string name="exact_alarm_permission_message">This app needs permission to schedule exact alarms for precise reminders. Please enable this in Settings.</string>
 </resources>
