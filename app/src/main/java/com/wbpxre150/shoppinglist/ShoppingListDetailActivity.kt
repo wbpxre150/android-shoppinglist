@@ -704,62 +704,40 @@ class ShoppingListDetailActivity : AppCompatActivity() {
     }
 
     private fun showPermissionExplanationDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_permission_notification, null)
-        val buttonCancel = dialogView.findViewById<Button>(R.id.buttonCancel)
-        val buttonGrantPermission = dialogView.findViewById<Button>(R.id.buttonGrantPermission)
-
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogView)
-            .create()
-
-        // Set transparent background for MaterialCardView styling
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-        // Set up button listeners
-        buttonCancel.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        buttonGrantPermission.setOnClickListener {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                REQUEST_NOTIFICATION_PERMISSION
-            )
-            dialog.dismiss()
-        }
-
-        dialog.show()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.notification_permission_title)
+            .setMessage(R.string.notification_permission_message)
+            .setPositiveButton(R.string.grant_permission) { dialog, _ ->
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    REQUEST_NOTIFICATION_PERMISSION
+                )
+                dialog.dismiss()
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun showExactAlarmPermissionDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_permission_alarm, null)
-        val buttonCancel = dialogView.findViewById<Button>(R.id.buttonCancel)
-        val buttonOpenSettings = dialogView.findViewById<Button>(R.id.buttonOpenSettings)
-
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogView)
-            .create()
-
-        // Set transparent background for MaterialCardView styling
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-        // Set up button listeners
-        buttonCancel.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        buttonOpenSettings.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
-                    data = Uri.parse("package:$packageName")
+        AlertDialog.Builder(this)
+            .setTitle(R.string.exact_alarm_permission_title)
+            .setMessage(R.string.exact_alarm_permission_message)
+            .setPositiveButton(R.string.open_settings) { dialog, _ ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM).apply {
+                        data = Uri.parse("package:$packageName")
+                    }
+                    startActivity(intent)
                 }
-                startActivity(intent)
+                dialog.dismiss()
             }
-            dialog.dismiss()
-        }
-
-        dialog.show()
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     override fun onRequestPermissionsResult(
