@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lista della spesa</string>
+    <string name="save">Salva</string>
+    <string name="hint_list_name">Nome della lista</string>
+    <string name="empty_not_saved">Il nome della lista non può essere vuoto</string>
+    <string name="add_new_list">Aggiungi nuova lista</string>
+    <string name="add_item">Aggiungi prodotto</string>
+    <string name="hint_item_name">Nome prodotto</string>
+    <string name="hint_item_quantity">Quantità</string>
+    <string name="empty_item_not_saved">Il nome del prodotto non può essere vuoto</string>
+    <string name="delete">Elimina</string>
+    <string name="delete_list">Elimina lista</string>
+    <string name="mark_purchased">Segna come comprato</string>
+    <string name="mark_not_purchased">Segna come da comprare</string>
+    <string name="no_lists">Nessuna lista della spesa trovata. Creane una!</string>
+    <string name="no_items">Nessun prodotto in questa lista. Aggiungine alcuni!</string>
+    <string name="edit_item">Modifica prodotto</string>
+    <string name="hint_edit_item_name">Nome prodotto</string>
+    <string name="hint_edit_item_quantity">Quantità</string>
+    <string name="item_updated">Prodotto aggiornato</string>
+    <string name="item_name_empty">Il nome del prodotto non può essere vuoto</string>
+    <string name="share_list">Condividi lista/string>
+    <string name="export_error">Esportazione lista fallita</string>
+    <string name="import_error">Importazione lista fallita</string>
+    <string name="import_success">Lista importata correttamente</string>
+    <string name="importing_list">Importazione lista della spesa…</string>
+    <string name="share_subject">Lista della spesa: %s</string>
+    <string name="share_message">Ecco la mia lista della spesa: %s</string>
+    <string name="enter_price">Inserisci prezzo</string>
+    <string name="hint_price">Prezzo</string>
+    <string name="set_reminder_title">Imposta un promemoria</string>
+    <string name="select_date">Seleziona data</string>
+    <string name="select_time">Seleziona orario/string>
+    <string name="set_reminder">Imposta promemoria</string>
+    <string name="reminder_past_error">Impossibile impostare promemoria nel passato</string>
+    <string name="reminder_set">Promemoria impostato correttamente</string>
+    <string name="delete_shopping_list">Elimina lista della spesa</string>
+    <string name="delete_confirmation_message">Vuoi davvero eliminare questa lista della spesa e tutti i suoi prodotti?</string>
+    <string name="notification_permission_title">Autorizzazione notifiche necessaria</string>
+    <string name="notification_permission_message">Quest\'app richiede l\'autorizzazione delle notifiche per ricordarti dei tuoi prodotti da comprare. Concedi l\'autorizzazione per attivare i promemoria.</string>
+    <string name="exact_alarm_permission_title">Autorizzazione sveglia esatta necessaria</string>
+    <string name="exact_alarm_permission_message">Quest\'app richiede l\'autorizzazione di programmare sveglie esatte per promemoria precisi. Attivala nelle impostazioni.</string>
+    <string name="cancel">Annulla</string>
+    <string name="grant_permission">Concedi autorizzazione</string>
+    <string name="open_settings">Apri impostazioni</string>
+</resources>
